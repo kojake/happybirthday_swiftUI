@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-var birthday_list = ["平成：2010/11/7"]
+var birthday_list = ["a 平成：2010/11/7"]
 
 @main
 struct Happybirthday_SwiftUIApp: App {
