@@ -13,6 +13,7 @@
 		977AB36829C4768C006521B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 977AB36729C4768C006521B4 /* Assets.xcassets */; };
 		977AB36B29C4768C006521B4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 977AB36A29C4768C006521B4 /* Preview Assets.xcassets */; };
 		977AB37229C47CDA006521B4 /* add_birthdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977AB37129C47CDA006521B4 /* add_birthdayView.swift */; };
+		97A236C729CE83270056FB61 /* Photoadd_view.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A236C629CE83270056FB61 /* Photoadd_view.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		977AB36729C4768C006521B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		977AB36A29C4768C006521B4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		977AB37129C47CDA006521B4 /* add_birthdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = add_birthdayView.swift; sourceTree = "<group>"; };
+		97A236C629CE83270056FB61 /* Photoadd_view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photoadd_view.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +41,7 @@
 		977AB35729C4768B006521B4 = {
 			isa = PBXGroup;
 			children = (
+				97A236C629CE83270056FB61 /* Photoadd_view.swift */,
 				977AB36229C4768B006521B4 /* Happybirthday_SwiftUI */,
 				977AB36129C4768B006521B4 /* Products */,
 			);
@@ -147,6 +150,7 @@
 				977AB37229C47CDA006521B4 /* add_birthdayView.swift in Sources */,
 				9764B0BC29CD1D420083E75B /* PhotoModel.swift in Sources */,
 				977AB36429C4768B006521B4 /* Happybirthday_SwiftUIApp.swift in Sources */,
+				97A236C729CE83270056FB61 /* Photoadd_view.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
