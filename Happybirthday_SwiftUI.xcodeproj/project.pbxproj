@@ -41,7 +41,6 @@
 		977AB35729C4768B006521B4 = {
 			isa = PBXGroup;
 			children = (
-				97A236C629CE83270056FB61 /* Photoadd_view.swift */,
 				977AB36229C4768B006521B4 /* Happybirthday_SwiftUI */,
 				977AB36129C4768B006521B4 /* Products */,
 			);
@@ -58,6 +57,7 @@
 		977AB36229C4768B006521B4 /* Happybirthday_SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				97A236C629CE83270056FB61 /* Photoadd_view.swift */,
 				977AB36329C4768B006521B4 /* Happybirthday_SwiftUIApp.swift */,
 				977AB36529C4768B006521B4 /* mainView.swift */,
 				977AB37129C47CDA006521B4 /* add_birthdayView.swift */,
