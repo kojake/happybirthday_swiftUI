@@ -9,6 +9,7 @@ import SwiftUI
 
 struct mainView: View {
     @State private var shouldShowadd_birthdayView = false
+    var photo: PhotoModel
     
     var body: some View {
         NavigationView {
@@ -21,6 +22,7 @@ struct mainView: View {
                 Spacer()
                 List(0..<birthday_list.count){ item in
                     HStack{
+                        Image(photo.name)
                         Text(birthday_list[item])
                     }
                 }
@@ -33,6 +35,7 @@ struct mainView: View {
                             Text("+").fontWeight(.black).font(.title).foregroundColor(.white)
                         )
                     }
+                    Spacer()
                 }
             }
         }
@@ -41,6 +44,6 @@ struct mainView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        mainView()
+        mainView(photo: photoArray[0]).previewLayout(.fixed(width: 300, height: 300))
     }
 }

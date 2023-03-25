@@ -29,10 +29,9 @@ struct add_birthdayView: View{
 //    let date_of_birth = "\(name):\(japanese_calender)：\(year)/\(month)/\(day)"
     
     //追加されていないalert
-    @State private var year_enter_not_alert = false
-    @State private var month_enter_not_alert = false
-    @State private var day_enter_not_alert = false
+    @State private var enter_not_alert = false
     @State private var Additional_checks = false
+    @State private var Add_ok_alert = false
     
     var body: some View {
         VStack{
@@ -44,7 +43,7 @@ struct add_birthdayView: View{
                 }
                 HStack{
                     Text("名前")
-                    TextField("自分の名前を入力してください",text: $year)
+                    TextField("自分の名前を入力してください",text: $name)
                 }
                 VStack{
                     Text("2.生年月日を入力してください").font(.title2).fontWeight(.black)
@@ -93,14 +92,8 @@ struct add_birthdayView: View{
                 VStack{
                     Text("4.追加ボタンを押してください").font(.title2).fontWeight(.black)
                     Button(action: {
-                        if year == ""{
-                            year_enter_not_alert = true
-                        }
-                        else if month == ""{
-                            month_enter_not_alert = true
-                        }
-                        else if day == ""{
-                            day_enter_not_alert = true
+                        if (year == "") || (month == "") || (day == "") || (name == ""){
+                            enter_not_alert = true
                         }
                         else{
                             Additional_checks = true
@@ -112,23 +105,17 @@ struct add_birthdayView: View{
                         )
                         
                         //not_enter_alert
-                        .alert(isPresented: $year_enter_not_alert) {
+                        .alert(isPresented: $enter_not_alert) {
                             Alert(title: Text("注意"),
-                                  message: Text("年の入力欄が入力されていません"))
-                        }
-                        .alert(isPresented: $month_enter_not_alert) {
-                            Alert(title: Text("注意"),
-                                  message: Text("月の入力欄が入力されていません"))
-                        }
-                        .alert(isPresented: $day_enter_not_alert) {
-                            Alert(title: Text("注意"),
-                                  message: Text("日の入力欄が入力されていません"))
+                                  message: Text("どこかの欄が入力されていません"))
                         }
                         
-                        //追加確認
+                        //確認画面
                         .alert(isPresented: $Additional_checks) {
-                            Alert(title: Text("確認"),
-                                  message: Text("日の入力欄が入力されていません"))
+                              Alert(title: Text("警告"),
+                                    message: Text("名前：" + String(name) + "生年月日" + "\("平成")：\(year)/\(month)/\(day)" + "で追加しますか"),
+                                    primaryButton: .cancel(Text("キャンセル")),
+                                    dismissButton: .default(Text("追加"),action: {add_list()}))
                         }
                     }
                 }
@@ -136,8 +123,16 @@ struct add_birthdayView: View{
         }
     }
     func add_list(){
-
+        let space = "   "
         
+        let birthday_list_house = "\(space)\(name):\("平成")/：\(year)/\(month)/\(day)"
+        
+        //追加
+        birthday_list.append(birthday_list_house)
+        .alert(isPresented: $Add_ok_alert) {
+            Alert(title: Text("報告"),
+                  message: Text("追加しまっした"))
+        }
     }
     }
     

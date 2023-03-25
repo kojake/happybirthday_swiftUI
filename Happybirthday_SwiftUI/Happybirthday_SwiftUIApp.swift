@@ -13,7 +13,7 @@ var birthday_list = ["a 平成：2010/11/7"]
 struct Happybirthday_SwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            mainView()
+            mainView(photo: photoArray[0]).previewLayout(.fixed(width: 300, height: 300))
         }
     }
 }
