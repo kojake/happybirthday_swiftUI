@@ -18,7 +18,7 @@ struct Photoadd_view: View {
     
     var body: some View {
         VStack{
-            Text("写真")
+            Text("写真").fontWeight(.black).font(.title)
             List{
                 VStack{
                     Text("3.写真選択してください").fontWeight(.black).font(.title)
