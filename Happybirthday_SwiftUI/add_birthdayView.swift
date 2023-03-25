@@ -133,6 +133,7 @@ struct add_birthdayView: View{
             Alert(title: Text("報告"),
                   message: Text("追加しまっした"))
         }
+        //a
     }
     }
     
