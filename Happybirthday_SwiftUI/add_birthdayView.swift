@@ -8,10 +8,10 @@
 import UIKit
 import SwiftUI
 
-//キーボードを閉じる
-extension UIApplication {
+//必要ないかも なければ削除
+extension View {
     func endEditing() {
-        sendAction(#selector(UIResponder.resignFirstResponder),to: nil, from: nil,for: nil)
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 
@@ -22,6 +22,7 @@ struct add_birthdayView: View{
     @State var day = ""
     @State var name = ""
     var japanese_calender = ""
+    @State private var text = ""
     
     //icon
     @State private var image: UIImage?
@@ -50,29 +51,27 @@ struct add_birthdayView: View{
                 }
                 HStack{
                     TextField("自分の名前を入力してください",text: $name)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
                 }
                 VStack{
                     Text("2.生年月日を入力してください").font(.title2).fontWeight(.black)
                 }
                 HStack{
                     TextField("生まれた年を入力してください",text: $year).keyboardType(.numberPad)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
                 }
+                
                 HStack{
                     TextField("生まれた月を入力してください",text: $month).keyboardType(.numberPad)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
                 }
                 HStack{
                     TextField("生まれた日を入力してください",text: $day).keyboardType(.numberPad)
-                }
-                HStack{
-                    Text("閉じるボタンを押せば   キーボードを閉じれます。").font(.title3).fontWeight(.black)
-                    Spacer()
-                    Button(action: {
-                        UIApplication.shared.endEditing()
-                    }){
-                        Circle().foregroundColor(.brown).frame(width:90,height: 90).shadow(radius: 50).overlay(
-                            Text("閉じる").fontWeight(.black).font(.title).foregroundColor(.white)
-                        )
-                    }
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
                 }
                 VStack{
                     Button(action: {
@@ -84,6 +83,13 @@ struct add_birthdayView: View{
                     }
                 }
             }
+            .toolbar {
+            ToolbarItem(placement: .keyboard) {
+                Button("完了") {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
+            }
+        }
         }
     }
     func add_list(){
