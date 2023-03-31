@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-var birthday_list = ["a 平成：2010/11/7"]
-var birthday_list_house = ""
 var japanese_calender = ""
+var birthday_list_house = ""
+var error_text = ""
 
 @main
 struct Happybirthday_SwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            mainView(photo: photoArray[0]).previewLayout(.fixed(width: 300, height: 300))
+            mainView(photo: photoArray[1]).previewLayout(.fixed(width: 300, height: 300))
         }
     }
 }
