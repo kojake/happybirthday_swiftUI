@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct mainView: View {
-    @State private var shouldShowadd_birthdayView = false
+    @State private var shouldShowPhotoadd_View = false
     
-    @State var birthday_list = [String]()
+    @State var birthday_list = ["a"]
     
     var photo: PhotoModel
     
@@ -26,16 +26,21 @@ struct mainView: View {
     var body: some View {
         NavigationView {
             VStack {
-                NavigationLink(destination: add_birthdayView(), isActive: $shouldShowadd_birthdayView) {
+                NavigationLink(destination: Photoadd_view(), isActive: $shouldShowPhotoadd_View) {
                     EmptyView()
                 }
                 
                 Text("HAPPYBIRTHDAY").font(.largeTitle).fontWeight(.black)
                 Spacer()
-                List{
+                List(photoArray){ item in
+                    HStack{
+                        mainView(photo: item)
+                            .frame(width: 100, height: 100)
+                            .clipShape(Circle())
+                    }
+                    
                     HStack{
                         ForEach(0 ..< birthday_list.count, id: \.self){ item in
-                            Image(photo.name)
                             Text(birthday_list[item])
                         }
                }.font(.largeTitle).fontWeight(.black)
@@ -125,18 +130,6 @@ struct mainView: View {
     }
 
 }
-//HStack{
-//    Spacer()
-//    Button(action: {
-//        shouldShowadd_birthdayView = true
-//    }){
-//        Circle().foregroundColor(.brown).frame(width:100,height: 100).shadow(radius: 50).overlay(
-//            Text("+").fontWeight(.black).font(.title).foregroundColor(.white)
-//        )
-//    }
-//    Spacer()
-//}
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

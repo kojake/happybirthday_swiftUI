@@ -17,8 +17,8 @@ struct PhotoModel: Identifiable{
 func makePhotoData() ->[PhotoModel]{
     var dataArray:[PhotoModel] = []
     
-    dataArray.append(PhotoModel(id: 1, name: "1"))
-    dataArray.append(PhotoModel(id: 2, name: "2"))
+    dataArray.append(PhotoModel(id: 1, name: "NoImage"))
+    dataArray.append(PhotoModel(id: 2, name: "beef"))
     
     return dataArray
 }

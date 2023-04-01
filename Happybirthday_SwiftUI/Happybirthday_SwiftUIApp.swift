@@ -15,7 +15,7 @@ var error_text = ""
 struct Happybirthday_SwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            mainView(photo: photoArray[1]).previewLayout(.fixed(width: 300, height: 300))
+            mainView(photo: photoArray[0]).previewLayout(.fixed(width: 300, height: 300))
         }
     }
 }
