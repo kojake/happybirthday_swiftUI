@@ -131,6 +131,8 @@ struct mainView: View {
 
 }
 
+
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         mainView(photo: photoArray[1]).previewLayout(.fixed(width: 300, height: 300))

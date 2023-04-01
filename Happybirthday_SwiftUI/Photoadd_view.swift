@@ -71,7 +71,7 @@ struct Photoadd_view: View {
     func add_list(){
         //写真を保存
         var dataArray:[PhotoModel] = []
-        dataArray.append(PhotoModel(id: 3, name: "3"))
+        dataArray.append(PhotoModel(id: 3, name: "3", imageName: "3"))
     }
     
     //写真を選択

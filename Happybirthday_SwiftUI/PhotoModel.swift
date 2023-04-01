@@ -12,13 +12,13 @@ var photoArray:[PhotoModel] = makePhotoData()
 struct PhotoModel: Identifiable{
     var id: Int
     var name: String
+    var imageName: String
 }
 
 func makePhotoData() ->[PhotoModel]{
     var dataArray:[PhotoModel] = []
     
-    dataArray.append(PhotoModel(id: 1, name: "NoImage"))
-    dataArray.append(PhotoModel(id: 2, name: "beef"))
+    dataArray.append(PhotoModel(id: 1, name: "NoImage", imageName: "NoImage"))
     
     return dataArray
 }
