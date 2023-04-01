@@ -10,9 +10,11 @@ import SwiftUI
 struct Photoadd_view: View {
     //追加されていないalert
     @State private var Additional_checks = false
-    @State private var Add_ok_alert = false
+    @State private var Photo_Add_ok_alert = false
     @State var showingImagePicker = false
     @State private var shouldShowmainView = false
+    
+    var photo_id = 2
     
     //画像
     @State private var image: UIImage?
@@ -56,6 +58,7 @@ struct Photoadd_view: View {
                 HStack{
                     Spacer()
                     Button(action: {
+                        Photo_Add_ok_alert = true
                         add_list()
                     }){
                         Circle().foregroundColor(.brown).frame(width:100,height: 100).shadow(radius: 50).overlay(
@@ -66,12 +69,22 @@ struct Photoadd_view: View {
                 }
             }.scrollContentBackground(.hidden)
                 .background(Color.gray)
+            
+                //Photoadd_ok_alert
+                .alert(isPresented: $Photo_Add_ok_alert) {
+                     Alert(title: Text("追加しました。"))
+                 }
         }
     }
+    
     func add_list(){
         //写真を保存
         var dataArray:[PhotoModel] = []
-        dataArray.append(PhotoModel(id: 3, name: "3", imageName: "3"))
+        dataArray.append(PhotoModel(id: photo_id, name: String(photo_id), imageName: String(photo_id)))
+        
+        //写真idを足す
+        photo_id + 1
+        print("photoid",photo_id)
     }
     
     //写真を選択

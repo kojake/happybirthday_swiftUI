@@ -10,7 +10,8 @@ import SwiftUI
 struct mainView: View {
     @State private var shouldShowPhotoadd_View = false
     
-    @State var birthday_list = UserDefaults.standard.object(forKey: "birthday_list_key") as! [String]
+    @State var birthday_list = [String]()
+//    UserDefaults.standard.object(forKey: "birthday_list_key") as! [String]
     
     var photo: PhotoModel
     
@@ -132,16 +133,15 @@ struct mainView: View {
 }
 
 struct ImageRowView: View {
-    var photo: PhotoModel
+    @State var photo: PhotoModel
 
     var body: some View {
         HStack {
             Spacer()
-            Image(photo.imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width:150, height: 140)
-                .clipped().shadow(radius: 20)
+            Image(photo.imageName).resizable().frame(width:150, height: 140).clipShape(Circle()).overlay(Circle()
+                .stroke(Color.gray, lineWidth: 8))
+                .shadow(radius: 20)
+
             Spacer()
         }
     }
