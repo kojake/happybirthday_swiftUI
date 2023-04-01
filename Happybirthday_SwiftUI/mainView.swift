@@ -10,7 +10,7 @@ import SwiftUI
 struct mainView: View {
     @State private var shouldShowPhotoadd_View = false
     
-    @State var birthday_list = ["a"]
+    @State var birthday_list = UserDefaults.standard.object(forKey: "birthday_list_key") as! [String]
     
     var photo: PhotoModel
     
@@ -34,18 +34,13 @@ struct mainView: View {
                 Spacer()
                 List(photoArray){ item in
                     HStack{
-                        mainView(photo: item)
-                            .frame(width: 100, height: 100)
-                            .clipShape(Circle())
+                        ImageRowView(photo: item)
                     }
-                    
-                    HStack{
-                        ForEach(0 ..< birthday_list.count, id: \.self){ item in
-                            Text(birthday_list[item])
-                        }
-               }.font(.largeTitle).fontWeight(.black)
+                    ForEach(0 ..< birthday_list.count, id: \.self){ item in
+                        Text(birthday_list[item])
+                    }.font(.title2).fontWeight(.black)
                 }.scrollContentBackground(.hidden)
-                    .background(Color.gray)
+                    .background(Color.gray).listRowSeparator(.automatic)
                 
                 List{
                     VStack{
@@ -78,6 +73,7 @@ struct mainView: View {
                         Spacer()
                         Button(action: {
                             add_birthday_list()
+                            print(birthday_list)
                         }){
                             Circle().foregroundColor(.brown).frame(width:100,height: 100).shadow(radius: 50).overlay(
                                 Text("追加").fontWeight(.black).font(.title).foregroundColor(.white)
@@ -102,7 +98,11 @@ struct mainView: View {
                               secondaryButton: .default(Text("追加"),
                                                       action: {
                             birthday_list.append(birthday_list_house)
-                            print(birthday_list)
+                            //データ保存
+                            UserDefaults.standard.set(birthday_list, forKey: "birthday_list_key")
+                            
+                            //写真追加画面へ遷移
+                            shouldShowPhotoadd_View = true
                         }))
                     }
         }
@@ -124,17 +124,31 @@ struct mainView: View {
             
             //詳細
             error_text = ""
-            birthday_list_house = "\(name):\(japanese_calender)/：\(year)/\(month)/\(day)"
+            birthday_list_house = ("\(name):\(japanese_calender)/：\(year)/\(month)/\(day)")
             add_birthday_ok = true
         }
     }
 
 }
 
+struct ImageRowView: View {
+    var photo: PhotoModel
 
+    var body: some View {
+        HStack {
+            Spacer()
+            Image(photo.imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width:150, height: 140)
+                .clipped().shadow(radius: 20)
+            Spacer()
+        }
+    }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        mainView(photo: photoArray[1]).previewLayout(.fixed(width: 300, height: 300))
+        mainView(photo: photoArray[0]).previewLayout(.fixed(width: 300, height: 300))
     }
 }
