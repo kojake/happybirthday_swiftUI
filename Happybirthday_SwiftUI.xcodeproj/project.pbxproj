@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9764B0BC29CD1D420083E75B /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9764B0BB29CD1D420083E75B /* PhotoModel.swift */; };
+		976B3A0A29D9179E00A1D4C9 /* add_ok_view.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976B3A0929D9179E00A1D4C9 /* add_ok_view.swift */; };
 		977AB36429C4768B006521B4 /* Happybirthday_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977AB36329C4768B006521B4 /* Happybirthday_SwiftUIApp.swift */; };
 		977AB36629C4768B006521B4 /* mainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977AB36529C4768B006521B4 /* mainView.swift */; };
 		977AB36829C4768C006521B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 977AB36729C4768C006521B4 /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		9764B0BB29CD1D420083E75B /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
+		976B3A0929D9179E00A1D4C9 /* add_ok_view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = add_ok_view.swift; sourceTree = "<group>"; };
 		977AB36029C4768B006521B4 /* Happybirthday_SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Happybirthday_SwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		977AB36329C4768B006521B4 /* Happybirthday_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Happybirthday_SwiftUIApp.swift; sourceTree = "<group>"; };
 		977AB36529C4768B006521B4 /* mainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainView.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			isa = PBXGroup;
 			children = (
 				97A236C629CE83270056FB61 /* Photoadd_view.swift */,
+				976B3A0929D9179E00A1D4C9 /* add_ok_view.swift */,
 				977AB36329C4768B006521B4 /* Happybirthday_SwiftUIApp.swift */,
 				977AB36529C4768B006521B4 /* mainView.swift */,
 				9764B0BB29CD1D420083E75B /* PhotoModel.swift */,
@@ -145,6 +148,7 @@
 			files = (
 				977AB36629C4768B006521B4 /* mainView.swift in Sources */,
 				9764B0BC29CD1D420083E75B /* PhotoModel.swift in Sources */,
+				976B3A0A29D9179E00A1D4C9 /* add_ok_view.swift in Sources */,
 				977AB36429C4768B006521B4 /* Happybirthday_SwiftUIApp.swift in Sources */,
 				97A236C729CE83270056FB61 /* Photoadd_view.swift in Sources */,
 			);

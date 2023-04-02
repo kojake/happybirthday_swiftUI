@@ -32,7 +32,7 @@ struct mainView: View {
             VStack {
                 NavigationLink(destination: Photoadd_view(), isActive: $shouldShowPhotoadd_View) {
                     EmptyView()
-                }
+                }.navigationBarBackButtonHidden(true)
                 
                 Text("HAPPYBIRTHDAY").font(.largeTitle).fontWeight(.black)
                 Spacer()

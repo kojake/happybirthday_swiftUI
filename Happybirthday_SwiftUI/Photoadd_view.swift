@@ -12,7 +12,7 @@ struct Photoadd_view: View {
     @State private var Additional_checks = false
     @State private var Photo_Add_ok_alert = false
     @State var showingImagePicker = false
-    @State private var shouldShowmainView = false
+    @State private var shouldShowadd_ok_view = false
     
     var photo_id = 1
     
@@ -21,6 +21,10 @@ struct Photoadd_view: View {
     
     var body: some View {
         VStack{
+            NavigationLink(destination: add_ok_view(), isActive: $shouldShowadd_ok_view) {
+                EmptyView()
+            }
+            
             Text("写真を追加する").fontWeight(.black).font(.title)
             List{
                 VStack{
@@ -83,11 +87,12 @@ struct Photoadd_view: View {
                                 //写真を保存
                                 var dataArray:[PhotoModel] = []
                                 dataArray.append(PhotoModel(id: photo_id, name: "NoImage", imageName: "NoImage"))
+                                
+                                shouldShowadd_ok_view = true
                             }))
                         }
         }
     }
-    
     func add_list(){
         //写真を保存
         var dataArray:[PhotoModel] = []
@@ -96,6 +101,8 @@ struct Photoadd_view: View {
         //写真idを足す
         photo_id + 1
         print("photoid",photo_id)
+        
+        shouldShowadd_ok_view = true
     }
     
     //写真を選択
@@ -135,6 +142,7 @@ struct Photoadd_view: View {
                 
                 if let image = info[.originalImage] as? UIImage {
                     parent.selectedImage = image
+                    add_photo_yes_not = 2
                 }
                 
                 parent.presentationMode.wrappedValue.dismiss()
