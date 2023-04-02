@@ -14,7 +14,7 @@ struct Photoadd_view: View {
     @State var showingImagePicker = false
     @State private var shouldShowmainView = false
     
-    var photo_id = 2
+    var photo_id = 1
     
     //画像
     @State private var image: UIImage?
@@ -43,11 +43,11 @@ struct Photoadd_view: View {
                             .resizable()
                             .frame(width: 200, height: 200)
                             .clipShape(Circle())
+                        
                     } else {
-                        Image("NoImage")
-                            .resizable()
-                            .frame(width: 200, height: 200)
-                            .clipShape(Circle())
+                        Image("NoImage").resizable().frame(width:150, height: 140).clipShape(Circle()).overlay(Circle()
+                            .stroke(Color.gray, lineWidth: 9))
+                            .shadow(radius: 20)
                     }
                 }
                 
@@ -58,8 +58,12 @@ struct Photoadd_view: View {
                 HStack{
                     Spacer()
                     Button(action: {
-                        Photo_Add_ok_alert = true
-                        add_list()
+                        if add_photo_yes_not == 1{
+                            Photo_Add_ok_alert = true
+                        }
+                        else{
+                            add_list()
+                        }
                     }){
                         Circle().foregroundColor(.brown).frame(width:100,height: 100).shadow(radius: 50).overlay(
                             Text("追加").fontWeight(.black).font(.title).foregroundColor(.white)
@@ -72,8 +76,15 @@ struct Photoadd_view: View {
             
                 //Photoadd_ok_alert
                 .alert(isPresented: $Photo_Add_ok_alert) {
-                     Alert(title: Text("追加しました。"))
-                 }
+                            Alert(title: Text("確認"),
+                                  message: Text("写真が選択されていませんが追加しますか？"),primaryButton: .cancel(Text("キャンセル")),
+                                  secondaryButton: .default(Text("追加"),
+                                                          action: {
+                                //写真を保存
+                                var dataArray:[PhotoModel] = []
+                                dataArray.append(PhotoModel(id: photo_id, name: "NoImage", imageName: "NoImage"))
+                            }))
+                        }
         }
     }
     

@@ -15,6 +15,9 @@ struct mainView: View {
     
     var photo: PhotoModel
     
+    //errorlabel
+    @State var error_text = ""
+    
     //生年月日item
     @State var year = ""
     @State var month = ""
@@ -44,6 +47,11 @@ struct mainView: View {
                     .background(Color.gray).listRowSeparator(.automatic)
                 
                 List{
+                    HStack{
+                        Spacer()
+                        Text("誕生日を覚える人を追加する").font(.title2).fontWeight(.black)
+                        Spacer()
+                    }
                     VStack{
                         Text("1.名前を入力してください").font(.title2).fontWeight(.black)
                     }
@@ -81,6 +89,9 @@ struct mainView: View {
                             )
                         }
                         Spacer()
+                    }
+                    VStack{
+                        Text(error_text).font(.title3).fontWeight(.black)
                     }
                 }
 

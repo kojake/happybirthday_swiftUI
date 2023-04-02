@@ -10,6 +10,7 @@ import SwiftUI
 var japanese_calender = ""
 var birthday_list_house = ""
 var error_text = ""
+var add_photo_yes_not = 1
 
 @main
 struct Happybirthday_SwiftUIApp: App {
