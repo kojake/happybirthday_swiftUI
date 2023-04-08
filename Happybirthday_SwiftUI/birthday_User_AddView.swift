@@ -10,6 +10,7 @@ struct birthday_User_AddView: View {
     @Binding var Birthday_User: [birthday_User]
 
     @State private var image: UIImage? = nil
+    var save_image_array: Array! = [NSData]()
     @State private var showingImagePicker = false
     
     //画面を閉じる
@@ -86,8 +87,14 @@ struct birthday_User_AddView: View {
                 
                 if let image = image, !name.isEmpty {
                     Birthday_User.append(birthday_User(name: name, year: year, month: month, day: day , japanese_calender: japanese_calender ,image: image))
+                    
                     //保存
-                    UserDefaults.standard.set(Birthday_User, forKey: "birthday_User_key")
+                    let data = image.pngData() as NSData?
+                    if let imageData = data {
+                        save_image_array.append(imageData)
+                        UserDefaults.standard.set(Birthday_User, forKey: "birthday_User_key")
+                        UserDefaults.standard.set(save_image_array, forKey: "birthday_User_image_key")
+                    }
                     
                     presentationMode.wrappedValue.dismiss()
                 }
