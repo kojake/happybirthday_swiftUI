@@ -40,6 +40,7 @@ struct add_ok_view: View {
                     Text("最初の画面になるまで押す")
                 }
             }
+            
             Spacer()
         }
     }

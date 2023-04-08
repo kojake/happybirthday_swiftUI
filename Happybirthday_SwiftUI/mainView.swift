@@ -140,7 +140,6 @@ struct mainView: View {
             add_birthday_ok = true
         }
     }
-
 }
 
 struct ImageRowView: View {
