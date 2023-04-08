@@ -86,6 +86,9 @@ struct birthday_User_AddView: View {
                 
                 if let image = image, !name.isEmpty {
                     Birthday_User.append(birthday_User(name: name, year: year, month: month, day: day , japanese_calender: japanese_calender ,image: image))
+                    //保存
+                    UserDefaults.standard.set(Birthday_User, forKey: "birthday_User_key")
+                    
                     presentationMode.wrappedValue.dismiss()
                 }
             })
