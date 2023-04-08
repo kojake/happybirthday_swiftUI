@@ -64,6 +64,7 @@ struct MainView: View {
             .sheet(isPresented: $showPhotoAddView) {
                 birthday_User_AddView(Birthday_User: $Birthday_User)
             }
+            //削除ボタン
             .navigationBarItems(trailing: EditButton().padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()))        }
     }
 }
