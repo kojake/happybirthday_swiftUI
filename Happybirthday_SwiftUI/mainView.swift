@@ -18,26 +18,27 @@ struct Photo: Identifiable {
 }
 
 struct MainView: View {
-    @State private var photos: [Photo] = []
+    @State var photos: [Photo] = []
     @State private var showPhotoAddView = false
     
     var body: some View {
         NavigationView {
             List {
-                ForEach($photos) { photo in
+                ForEach(photos) { photo in
                     VStack {
-                        Text(photo.name).fontWeight(.black)
-                        
+                        Text(photo.name).fontWeight(.black).font(.largeTitle)
                         HStack{
-                            Text(photo.year).fontWeight(.black)
-                            Text(photo.month).fontWeight(.black)
-                            Text(photo.day).fontWeight(.black)
+                            Text(photo.year).fontWeight(.black).font(.largeTitle)
+                            Text("/")
+                            Text(photo.month).fontWeight(.black).font(.largeTitle)
+                            Text("/")
+                            Text(photo.day).fontWeight(.black).font(.largeTitle)
                             Spacer()
                             Image(uiImage: photo.image)
                                 .resizable()
-                                .frame(width: 50, height: 50)
+                                .frame(width: 100, height: 100)
+                                .clipShape(Circle())
                         }
-
                     }
                 }
             }
@@ -54,12 +55,6 @@ struct MainView: View {
     }
 }
 
-//struct Photo: Identifiable {
-//    var id = UUID()
-//    var name: String
-//    var image: UIImage
-//}
-//
 //struct mainView: View {
 //    @State private var showPhotoAddView = false
 //
