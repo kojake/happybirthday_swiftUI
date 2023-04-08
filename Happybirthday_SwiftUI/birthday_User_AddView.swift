@@ -6,8 +6,8 @@
 //
 import SwiftUI
 
-struct PhotoAddView: View {
-    @Binding var photos: [Photo]
+struct birthday_User_AddView: View {
+    @Binding var Birthday_User: [birthday_User]
 
     @State private var image: UIImage? = nil
     @State private var showingImagePicker = false
@@ -18,7 +18,10 @@ struct PhotoAddView: View {
     @State var year = ""
     @State var month = ""
     @State var day = ""
+    @State var japanese_calender = ""
     
+    //error_alert
+    @State private var ShouldShowerror_alert = false
     
     var body: some View {
         NavigationView {
@@ -45,11 +48,33 @@ struct PhotoAddView: View {
                     Text("をタップして下さい").fontWeight(.black)
                 }
                 
+                .alert(isPresented: $ShouldShowerror_alert) {
+                    Alert(title: Text("エラー"),
+                          message: Text("どこかの欄が入力または画像が挿入されていません"))
+                }
+                
             }
             .navigationBarTitle("誕生日人を追加する")
             .navigationBarItems(trailing: Button("追加") {
+                
+                //西暦を保存する
+                if (name == "") || (year == "") || (month == "") || (day == ""){
+                    
+                }
+                else{
+                    if (Int(year)! >= 1926) && (Int(year)! <= 1989){
+                        japanese_calender = "昭和"
+                    }
+                    else if (Int(year)! >= 1990) && (Int(year)! <= 2019){
+                        japanese_calender = "平成"
+                    }
+                    else if (Int(year)! >= 2020) && (Int(year)! <= 2023){
+                        japanese_calender = "令和"
+                    }
+                }
+                
                 if let image = image, !name.isEmpty {
-                    photos.append(Photo(name: name, year: year, month: month, day: day ,image: image))
+                    Birthday_User.append(birthday_User(name: name, year: year, month: month, day: day , japanese_calender: japanese_calender ,image: image))
                     presentationMode.wrappedValue.dismiss()
                 }
             })

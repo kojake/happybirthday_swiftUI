@@ -8,40 +8,50 @@
 
 import SwiftUI
 
-struct Photo: Identifiable {
+struct birthday_User: Identifiable {
     var id = UUID()
     var name: String
     var year: String
     var month: String
     var day: String
+    var japanese_calender: String
     var image: UIImage
 }
 
 struct MainView: View {
-    @State var photos: [Photo] = []
+    @State var Birthday_User: [birthday_User] = []
+    
+    //画面遷移
     @State private var showPhotoAddView = false
+    @State private var showsettingView = false
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(photos) { photo in
+                ForEach(Birthday_User) { item in
                     VStack {
-                        Text(photo.name).fontWeight(.black).font(.largeTitle)
                         HStack{
-                            Text(photo.year).fontWeight(.black).font(.largeTitle)
-                            Text("/")
-                            Text(photo.month).fontWeight(.black).font(.largeTitle)
-                            Text("/")
-                            Text(photo.day).fontWeight(.black).font(.largeTitle)
+                            Text("名前：").fontWeight(.black).font(.title)
+                            Text(item.name).fontWeight(.black).font(.largeTitle)
                             Spacer()
-                            Image(uiImage: photo.image)
+                        }
+                        HStack{
+                            Image(uiImage: item.image)
                                 .resizable()
                                 .frame(width: 100, height: 100)
                                 .clipShape(Circle())
+                            Text(item.year).fontWeight(.black).font(.largeTitle)
+                            Text("/")
+                            Text(item.month).fontWeight(.black).font(.largeTitle)
+                            Text("/")
+                            Text(item.day).fontWeight(.black).font(.largeTitle)
+                            Spacer()
+
                         }
                     }
                 }
-            }
+            }//.onDelete(perform: rowRemove)
+            
             .navigationBarTitle("HappyBirthday")
             .navigationBarItems(trailing: Button(action: {
                 showPhotoAddView.toggle()
@@ -49,10 +59,22 @@ struct MainView: View {
                 Image(systemName: "plus").padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()).padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
             })
             .sheet(isPresented: $showPhotoAddView) {
-                PhotoAddView(photos: $photos)
+                birthday_User_AddView(Birthday_User: $Birthday_User)
+            }
+            .navigationBarItems(leading: Button(action: {
+                showPhotoAddView.toggle()
+            }) {
+                Image(systemName: "gearshape.fill").padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()).padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+            })
+            .sheet(isPresented: $showsettingView) {
+                setting()
             }
         }
     }
+    
+//    func rowRemove(offsets: IndexSet) {
+//        birthday_User.remove(atOffsets: offsets)
+//    }
 }
 
 //struct mainView: View {
