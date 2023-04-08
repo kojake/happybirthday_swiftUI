@@ -10,7 +10,7 @@ struct birthday_User_AddView: View {
     @Binding var Birthday_User: [birthday_User]
 
     @State private var image: UIImage? = nil
-    var save_image_array: Array! = [NSData]()
+    @State private var save_image_array: Array! = [NSData]()
     @State private var showingImagePicker = false
     
     //画面を閉じる
