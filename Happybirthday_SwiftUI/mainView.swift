@@ -51,9 +51,10 @@ struct MainView: View {
 
                         }
                     }
-                }
+                }.onDelete(perform: { indexSet in
+                    Birthday_User.remove(at: indexSet.first!)
+                  })
             }
-            
             .navigationBarTitle("HappyBirthday")
             .navigationBarItems(trailing: Button(action: {
                 showPhotoAddView.toggle()
@@ -63,12 +64,7 @@ struct MainView: View {
             .sheet(isPresented: $showPhotoAddView) {
                 birthday_User_AddView(Birthday_User: $Birthday_User)
             }
-            .navigationBarItems(leading: Button(action: {
-
-            }) {
-                Image(systemName: "trash.fill").padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()).padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-            })
-        }
+            .navigationBarItems(trailing: EditButton().padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()))        }
     }
 }
 
