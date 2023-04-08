@@ -4,21 +4,38 @@
 //
 //  Created by kaito on 2023/03/24.
 //
-
 import Foundation
+import SwiftUI
 
-var photoArray:[PhotoModel] = makePhotoData()
-
-struct PhotoModel: Identifiable{
-    var id: Int
-    var name: String
-    var imageName: String
-}
-
-func makePhotoData() ->[PhotoModel]{
-    var dataArray:[PhotoModel] = []
+struct PhotoModal: UIViewControllerRepresentable {
+    @Binding var image: UIImage?
+    @Environment(\.presentationMode) var presentationMode
     
-    dataArray.append(PhotoModel(id: 1, name: "NoImage", imageName: "NoImage"))
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
     
-    return dataArray
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.delegate = context.coordinator
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+    
+    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+        let parent: PhotoModal
+        
+        init(_ parent: PhotoModal) {
+            self.parent = parent
+        }
+        
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let uiImage = info[.originalImage] as? UIImage {
+                parent.image = uiImage
+            }
+            
+            parent.presentationMode.wrappedValue.dismiss()
+        }
+    }
 }

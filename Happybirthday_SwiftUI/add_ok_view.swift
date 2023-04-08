@@ -12,10 +12,7 @@ struct add_ok_view: View {
     
     var body: some View {
         VStack{
-            NavigationLink(destination: mainView(photo: photoArray[0]).previewLayout(.fixed(width: 300, height: 300)), isActive: $shouldShowmainView) {
-                EmptyView()
-            }
-            
+        
             Text("追加しました").font(.largeTitle).fontWeight(.black)
             Text("名前生年月日の内容").font(.largeTitle).fontWeight(.black)
             Text(birthday_list_house).font(.largeTitle).fontWeight(.black)

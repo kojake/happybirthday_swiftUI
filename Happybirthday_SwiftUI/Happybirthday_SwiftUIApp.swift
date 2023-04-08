@@ -16,7 +16,7 @@ var add_photo_yes_not = 1
 struct Happybirthday_SwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            mainView(photo: photoArray[0]).previewLayout(.fixed(width: 300, height: 300))
+            MainView()
         }
     }
 }
