@@ -8,9 +8,10 @@ import SwiftUI
 
 struct birthday_User_AddView: View {
     @Binding var Birthday_User: [birthday_User]
+    @Binding var Birthday_User_image: [birthday_User_image]
 
     @State private var image: UIImage? = nil
-    var save_image_array: Array! = [NSData]()
+    @State private var save_image_array: Array<Data> = []
     @State private var showingImagePicker = false
     
     //画面を閉じる
@@ -26,8 +27,8 @@ struct birthday_User_AddView: View {
     //error_alert
     @State private var ShouldShowerror_alert = false
     
-    //文字数制限
-    private let maxPasswordLength = 4
+    //誕生日の人の画像
+    
     
     var body: some View {
         NavigationView {
@@ -84,16 +85,15 @@ struct birthday_User_AddView: View {
                         ShouldShowerror_alert = true
                     }
                 }
-                
                 if let image = image, !name.isEmpty {
-                    Birthday_User.append(birthday_User(name: name, year: year, month: month, day: day , japanese_calender: japanese_calender ,image: image))
-                    
                     //保存
-                    let data = image.pngData() as NSData?
-                    if let imageData = data {
-                        save_image_array.append(imageData)
+                    if let data = image.pngData() {
+                        let uiImage = UIImage(data: data)
+                        save_image_array.append(data)
+                        Birthday_User.append(birthday_User(name: name, year: year, month: month, day: day,japanese_calender: japanese_calender))
+                        Birthday_User_image.append(birthday_User_image(save_image_array: save_image_array))
                         UserDefaults.standard.set(Birthday_User, forKey: "birthday_User_key")
-                        UserDefaults.standard.set(save_image_array, forKey: "birthday_User_image_key")
+                        UserDefaults.standard.set(save_image_array, forKey: "birthday_User_image")
                     }
                     
                     presentationMode.wrappedValue.dismiss()
