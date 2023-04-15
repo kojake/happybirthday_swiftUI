@@ -5,14 +5,12 @@
 //  Created by kaito on 2023/03/25.
 //
 import SwiftUI
-
 struct birthday_User_AddView: View {
     @Binding var Birthday_User: [birthday_User]
-    @Binding var Birthday_User_image: [birthday_User_image]
-
-    @State private var image: UIImage? = nil
-    @State private var save_image_array: Array<Data> = []
+    
+    @State private var image: Image?
     @State private var showingImagePicker = false
+    let userDefaults = UserDefaults.standard
     
     //画面を閉じる
     @Environment(\.presentationMode) var presentationMode
@@ -27,8 +25,8 @@ struct birthday_User_AddView: View {
     //error_alert
     @State private var ShouldShowerror_alert = false
     
-    //誕生日の人の画像
-    
+    //文字数制限
+    private let maxPasswordLength = 4
     
     var body: some View {
         NavigationView {
@@ -38,9 +36,8 @@ struct birthday_User_AddView: View {
                 TextField("タップして年を入力", text: $year).font(.title2).fontWeight(.black).keyboardType(.numberPad)
                 TextField("タップして月を入力", text: $month).font(.title2).fontWeight(.black).keyboardType(.numberPad)
                 TextField("タップして日を入力", text: $day).font(.title2).fontWeight(.black).keyboardType(.numberPad)
-
                 if let image = image {
-                    Image(uiImage: image)
+                    image
                         .resizable()
                         .scaledToFit()
                 }
@@ -85,23 +82,64 @@ struct birthday_User_AddView: View {
                         ShouldShowerror_alert = true
                     }
                 }
-                if let image = image, !name.isEmpty {
-                    //保存
-                    if let data = image.pngData() {
-                        let uiImage = UIImage(data: data)
-                        save_image_array.append(data)
-                        Birthday_User.append(birthday_User(name: name, year: year, month: month, day: day,japanese_calender: japanese_calender))
-                        Birthday_User_image.append(birthday_User_image(save_image_array: save_image_array))
-                        UserDefaults.standard.set(Birthday_User, forKey: "birthday_User_key")
-                        UserDefaults.standard.set(save_image_array, forKey: "birthday_User_image")
-                    }
-                    
-                    presentationMode.wrappedValue.dismiss()
+            }
+        )}.sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+                ImagePicker(image: $image)
+            }
+            .onDisappear {
+                if let imageData = image?.toData() {
+                    userDefaults.set(imageData, forKey: "savedImage")
+                    Birthday_User.append(birthday_User(name: name, year: year, month: month, day: day,japanese_calender: japanese_calender))
                 }
-            })
-            .sheet(isPresented: $showingImagePicker, content: {
-                PhotoModal(image: $image)
-            })
+            }
+    }
+    func loadImage() {
+            guard let inputImage = image else { return }
+            let imageData = inputImage.toData()
+            userDefaults.set(imageData, forKey: "savedImage")
         }
+}
+
+struct ImagePicker: UIViewControllerRepresentable {
+    
+    @Binding var image: Image?
+    @Environment(\.presentationMode) var presentationMode
+    
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.delegate = context.coordinator
+        picker.sourceType = .photoLibrary
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {
+        // Do nothing
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        
+        let parent: ImagePicker
+        
+        init(_ parent: ImagePicker) {
+            self.parent = parent
+        }
+        
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let uiImage = info[.originalImage] as? UIImage {
+                parent.image = Image(uiImage: uiImage)
+            }
+            parent.presentationMode.wrappedValue.dismiss()
+        }
+    }
+}
+
+extension Image {
+    func toData() -> Data? {
+        guard let uiImage = UIImage(systemName: "circle.fill"), let imageData = uiImage.pngData() else { return nil }
+        return imageData
     }
 }

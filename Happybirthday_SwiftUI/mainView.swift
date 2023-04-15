@@ -5,7 +5,6 @@
 //  Created by kaito on 2023/03/17.
 //
 
-
 import SwiftUI
 
 struct birthday_User: Identifiable {
@@ -15,17 +14,11 @@ struct birthday_User: Identifiable {
     var month: String
     var day: String
     var japanese_calender: String
-//    var image: UIImage
-}
-struct birthday_User_image: Identifiable {
-    var id = UUID()
-    var save_image_array: Array<Data>
 }
 
 struct MainView: View {
     @State var Birthday_User: [birthday_User] = []
-    @State var birthday_User_image: [birthday_User_image] = []
-    
+    var image = UserDefaults.standard.object(forKey: "savedImage")
     //画面遷移
     @State private var showPhotoAddView = false
     @State private var showstrashView = false
@@ -43,10 +36,10 @@ struct MainView: View {
                             Text(item.japanese_calender).fontWeight(.black).font(.largeTitle)
                         }
                         HStack{
-//                            Image(uiImage: item.image)
-//                                .resizable()
-//                                .frame(width: 100, height: 100)
-//                                .clipShape(Circle())
+                            Image(uiImage: (image as? UIImage) ?? UIImage(systemName: "circle.fill")!)
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                                .clipShape(Circle())
                             Text(item.year).fontWeight(.black).font(.title)
                             Text("/")
                             Text(item.month).fontWeight(.black).font(.title)
@@ -67,7 +60,7 @@ struct MainView: View {
                 Image(systemName: "plus").padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()).padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
             })
             .sheet(isPresented: $showPhotoAddView) {
-                birthday_User_AddView(Birthday_User: $Birthday_User, Birthday_User_image: $birthday_User_image)
+                birthday_User_AddView(Birthday_User: $Birthday_User)
             }
             //削除ボタン
             .navigationBarItems(trailing: EditButton().padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()))        }
