@@ -14,7 +14,7 @@ struct birthday_User_AddView: View {
     
     //写真選択画面を開く
     @Environment(\.presentationMode) var presentationMode
-    //画面を閉じる
+    //画面を閉じるために使う
     @Environment(\.dismiss) var dismiss
     
     //生年月日
