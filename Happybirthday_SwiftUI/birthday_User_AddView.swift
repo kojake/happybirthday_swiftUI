@@ -12,8 +12,10 @@ struct birthday_User_AddView: View {
     @State private var showingImagePicker = false
     let userDefaults = UserDefaults.standard
     
-    //画面を閉じる
+    //写真選択画面を開く
     @Environment(\.presentationMode) var presentationMode
+    //画面を閉じる
+    @Environment(\.dismiss) var dismiss
     
     //生年月日
     @State private var name = ""
@@ -51,10 +53,30 @@ struct birthday_User_AddView: View {
                     Text("追加").foregroundColor(.blue)
                     Text("をタップして下さい").fontWeight(.black)
                 }
-                
+                VStack{
+                    HStack{
+                        Text("何もアラートが出ないなら").fontWeight(.black)
+                        Text("追加完了!").fontWeight(.black)
+                    }
+                    Text("✖️を押して前の画面に戻れる").fontWeight(.black)
+                }
+                VStack{
+                    Text("誕生日が追加されない時の対処法").fontWeight(.black)
+                    Text("画像が挿入されていない").fontWeight(.black)
+                }
+                .toolbar {
+                    ToolbarItem(placement: .keyboard) {
+                        Button("閉じる") {
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        }
+                    }
+                }
                 .alert(isPresented: $ShouldShowerror_alert) {
                     Alert(title: Text("エラー"),
-                          message: Text("生年月日のどれかの欄が入力されていません又は、年が1926年から2023の間で入力されていない"))
+                          message: Text("生年月日のどれかの欄が入力されていません又は、年が1926年から2023の間で入力されていない"),
+                          dismissButton: .default(Text("了解"),
+                                                  action: {dismiss()})
+                    )
                 }
             }
             .navigationBarTitle("誕生日人を追加する")

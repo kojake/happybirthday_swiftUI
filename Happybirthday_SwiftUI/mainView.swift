@@ -18,7 +18,7 @@ struct birthday_User: Identifiable {
 
 struct MainView: View {
     @State var Birthday_User: [birthday_User] = []
-    var image = UserDefaults.standard.object(forKey: "savedImage")
+    @State var image = UserDefaults.standard.object(forKey: "savedImage") as? UIImage
     //画面遷移
     @State private var showPhotoAddView = false
     @State private var showstrashView = false
@@ -36,10 +36,14 @@ struct MainView: View {
                             Text(item.japanese_calender).fontWeight(.black).font(.largeTitle)
                         }
                         HStack{
-                            Image(uiImage: (image as? UIImage) ?? UIImage(systemName: "circle.fill")!)
-                                .resizable()
-                                .frame(width: 100, height: 100)
-                                .clipShape(Circle())
+                            if let image = image {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .frame(width: 100, height: 100)
+                                    .clipShape(Circle())
+                            } else {
+                                Text("No Image")
+                            }
                             Text(item.year).fontWeight(.black).font(.title)
                             Text("/")
                             Text(item.month).fontWeight(.black).font(.title)
