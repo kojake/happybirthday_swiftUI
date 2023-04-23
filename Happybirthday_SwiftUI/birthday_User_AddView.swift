@@ -111,6 +111,8 @@ struct birthday_User_AddView: View {
             .onDisappear {
                 if let imageData = image?.toData() {
                     userDefaults.set(imageData, forKey: "savedImage")
+                }
+                if !name.isEmpty && !year.isEmpty && !month.isEmpty && !day.isEmpty {
                     Birthday_User.append(birthday_User(name: name, year: year, month: month, day: day,japanese_calender: japanese_calender))
                 }
             }

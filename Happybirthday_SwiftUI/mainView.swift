@@ -27,30 +27,36 @@ struct MainView: View {
         NavigationView {
             List {
                 ForEach(Birthday_User) { item in
-                    VStack{
-                        HStack{
-                            Text("名前").fontWeight(.black).font(.title)
-                            Text(item.name).fontWeight(.black).font(.largeTitle)
-                            Spacer()
-                            Text("西暦").fontWeight(.black).font(.title)
-                            Text(item.japanese_calender).fontWeight(.black).font(.largeTitle)
-                        }
-                        HStack{
-                            if let image = image {
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .frame(width: 100, height: 100)
-                                    .clipShape(Circle())
-                            } else {
-                                Text("No Image")
+                    NavigationLink(destination: detail_View(birthday_user_information: item)){
+                        VStack{
+                            HStack{
+                                Text("名前").fontWeight(.black).font(.title)
+                                Text(item.name).fontWeight(.black).font(.title2)
+                                Spacer()
+                                Text("西暦").fontWeight(.black).font(.title)
+                                Text(item.japanese_calender).fontWeight(.black).font(.largeTitle)
                             }
-                            Text(item.year).fontWeight(.black).font(.title)
-                            Text("/")
-                            Text(item.month).fontWeight(.black).font(.title)
-                            Text("/")
-                            Text(item.day).fontWeight(.black).font(.title)
-                            Spacer()
-
+                            HStack{
+                                if let image = image {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .frame(width: 100, height: 100)
+                                        .clipShape(Circle())
+                                } else {
+                                    Image("NoImage").resizable()
+                                        .frame(width: 100, height: 100)
+                                        .clipShape(Circle())
+                                        .overlay(Circle().stroke(Color.gray, lineWidth: 4))
+                                        .shadow(radius: 7)
+                                }
+                                Text(item.year).fontWeight(.black).font(.title)
+                                Text("/")
+                                Text(item.month).fontWeight(.black).font(.title)
+                                Text("/")
+                                Text(item.day).fontWeight(.black).font(.title)
+                                Spacer()
+                                
+                            }
                         }
                     }
                 }.onDelete(perform: { indexSet in
