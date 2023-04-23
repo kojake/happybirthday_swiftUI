@@ -19,7 +19,7 @@ struct birthday_User: Identifiable {
 struct MainView: View {
     @State var Birthday_User: [birthday_User] = []
     @State var image = UserDefaults.standard.object(forKey: "savedImage") as? UIImage
-    //画面遷移
+    //画面遷移用
     @State private var showPhotoAddView = false
     @State private var showstrashView = false
     
