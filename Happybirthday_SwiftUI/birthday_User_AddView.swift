@@ -33,20 +33,34 @@ struct birthday_User_AddView: View {
     var body: some View {
         NavigationView {
             Form {
-                Text("誕生日の人の名前と生年月日を入力して下さい").font(.title2).fontWeight(.black)
-                TextField("タップして名前を入力", text: $name).font(.title2).fontWeight(.black)
-                TextField("タップして年を入力", text: $year).font(.title2).fontWeight(.black).keyboardType(.numberPad)
-                TextField("タップして月を入力", text: $month).font(.title2).fontWeight(.black).keyboardType(.numberPad)
-                TextField("タップして日を入力", text: $day).font(.title2).fontWeight(.black).keyboardType(.numberPad)
+                ZStack {
+                    Color.white.ignoresSafeArea()
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Image(systemName: "person.fill")
+                            TextField("タップして名前を入力", text: $name)
+                        }.underlineTextField()
+                        TextField("タップして年を入力", text: $year).font(.title2).fontWeight(.black).keyboardType(.numberPad).underlineTextField()
+                        TextField("タップして月を入力", text: $month).font(.title2).fontWeight(.black).keyboardType(.numberPad).underlineTextField()
+                        TextField("タップして日を入力", text: $day).font(.title2).fontWeight(.black).keyboardType(.numberPad).underlineTextField()
+                    }
+                }
                 if let image = image {
                     image
                         .resizable()
                         .scaledToFit()
                 }
-                Button(action: {
-                    showingImagePicker.toggle()
-                }) {
-                    Text("写真を選択する")
+                HStack{
+                    Spacer()
+                    Button(action: {
+                        showingImagePicker.toggle()
+                    }) {
+                        HStack{
+                            Image("photo")
+                            Text("写真を選択する")
+                        }
+                    }.buttonStyle(BlueButtonStyle())
+                    Spacer()
                 }
                 HStack{
                     Text("生年月日と画像を挿入できたら").fontWeight(.black)
@@ -113,7 +127,22 @@ struct birthday_User_AddView: View {
                     userDefaults.set(imageData, forKey: "savedImage")
                 }
                 if !name.isEmpty && !year.isEmpty && !month.isEmpty && !day.isEmpty {
-                    Birthday_User.append(birthday_User(name: name, year: year, month: month, day: day,japanese_calender: japanese_calender))
+                    let birthday_user = birthday_User(name: name, year: year, month: month, day: day, japanese_calender: japanese_calender)
+                    // UserDefaultsのキー
+                    let birthdayUserKey = "birthdayUserKey_hoge"
+                    // UserDefaultsから配列を取得
+                    var birthdayUsers = UserDefaults.standard.array(forKey: birthdayUserKey) as? [Data] ?? []
+                    // Birthday_UserをData型に変換し、配列に追加
+                    let encoder = JSONEncoder()
+                    do {
+                        let data = try encoder.encode(birthday_user)
+                        birthday_user.append(data)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+
+                    // UserDefaultsに配列を保存
+                    UserDefaults.standard.set(birthdayUsers, forKey: birthdayUserKey)
                 }
             }
     }
@@ -121,8 +150,7 @@ struct birthday_User_AddView: View {
             guard let inputImage = image else { return }
             let imageData = inputImage.toData()
             userDefaults.set(imageData, forKey: "savedImage")
-        }
-}
+        }}
 
 struct ImagePicker: UIViewControllerRepresentable {
     
@@ -165,5 +193,32 @@ extension Image {
     func toData() -> Data? {
         guard let uiImage = UIImage(systemName: "circle.fill"), let imageData = uiImage.pngData() else { return nil }
         return imageData
+    }
+}
+
+//textfileddesign
+extension View {
+    func underlineTextField() -> some View {
+        self
+            .padding(.vertical, 10)
+            .overlay(Rectangle().frame(height: 2).padding(.top, 35))
+            .foregroundColor(.pink)
+            .padding(10)
+    }
+}
+
+//photo選択buttondesign
+struct BlueButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.system(size: 28, weight:.bold, design: .rounded))
+            .foregroundColor(.white)
+            .padding(.horizontal)
+            .padding(5)
+            .background(Color.blue.opacity(0.8))
+            .cornerRadius(20)
+            .shadow(color:.black, radius: 4)
+            .opacity(configuration.isPressed ? 0.6 : 1.0)
+            .scaleEffect(configuration.isPressed ? 0.8 : 1.0)
     }
 }

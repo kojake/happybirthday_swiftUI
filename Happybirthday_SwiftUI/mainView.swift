@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct birthday_User: Identifiable {
+struct birthday_User: Codable,Identifiable {
     var id = UUID()
     var name: String
     var year: String
