@@ -14,6 +14,7 @@ struct birthday_User: Codable,Identifiable {
     var month: String
     var day: String
     var japanese_calender: String
+    var what_he_likes: String
 }
 
 struct MainView: View {

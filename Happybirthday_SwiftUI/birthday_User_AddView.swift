@@ -24,6 +24,28 @@ struct birthday_User_AddView: View {
     @State var day = ""
     @State var japanese_calender = ""
     
+    //本人の好きなこと
+    let options = ["スポーツや運動をすること","音楽を聴くことや演奏すること"
+,"映画やテレビ番組を観ること"
+,"旅行することや新しい場所を訪れること"
+,"料理や食べ物を楽しむこと"
+,"読書や知識を学ぶこと"
+,"ゲームをすること"
+,"ペットと過ごすことや動物を飼育すること"
+,"アウトドア活動や自然を楽しむこと"
+,"ショッピングやファッションに興味を持つこと"
+,"アートや芸術作品を鑑賞することや作ること"
+,"お酒やワイン、ビールを飲むこと"
+,"ダンスや音楽に合わせて身体を動かすこと"
+,"ヨガや瞑想をすること"
+,"パズルや謎解きをすること"
+,"クラフトや手芸をすること"
+,"ガーデニングや植物を育てること"
+,"コンサートやフェスティバルに参加すること"
+,"車やバイク、自転車を楽しむこと"
+,"テクノロジーやデバイスを使って遊ぶこと"]
+    @State private var what_he_likes_selection = ""
+    
     //error_alert
     @State private var ShouldShowerror_alert = false
     
@@ -45,6 +67,15 @@ struct birthday_User_AddView: View {
                         TextField("タップして日を入力", text: $day).font(.title2).fontWeight(.black).keyboardType(.numberPad).underlineTextField()
                     }
                 }
+                HStack{
+                    Image(systemName: "hand.thumbsup.fill")
+                    Picker("本人の好きなこと", selection: $what_he_likes_selection) {
+                        ForEach(0 ..< options.count) {
+                            Text(self.options[$0])
+                        }
+                    }
+                    .pickerStyle(.menu)
+                }.fontWeight(.black)
                 if let image = image {
                     image
                         .resizable()
@@ -127,22 +158,23 @@ struct birthday_User_AddView: View {
                     userDefaults.set(imageData, forKey: "savedImage")
                 }
                 if !name.isEmpty && !year.isEmpty && !month.isEmpty && !day.isEmpty {
-                    let birthday_user = birthday_User(name: name, year: year, month: month, day: day, japanese_calender: japanese_calender)
-                    // UserDefaultsのキー
-                    let birthdayUserKey = "birthdayUserKey_hoge"
-                    // UserDefaultsから配列を取得
-                    var birthdayUsers = UserDefaults.standard.array(forKey: birthdayUserKey) as? [Data] ?? []
-                    // Birthday_UserをData型に変換し、配列に追加
-                    let encoder = JSONEncoder()
-                    do {
-                        let data = try encoder.encode(birthday_user)
-                        birthday_user.append(data)
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-
-                    // UserDefaultsに配列を保存
-                    UserDefaults.standard.set(birthdayUsers, forKey: birthdayUserKey)
+                    Birthday_User.append(birthday_User(name: name, year: year, month: month, day: day, japanese_calender: japanese_calender, what_he_likes: what_he_likes_selection))
+//                    let birthday_user = birthday_User(name: name, year: year, month: month, day: day, japanese_calender: japanese_calender)
+//                    // UserDefaultsのキー
+//                    let birthdayUserKey = "birthdayUserKey_hoge"
+//                    // UserDefaultsから配列を取得
+//                    var birthdayUsers = UserDefaults.standard.array(forKey: birthdayUserKey) as? [Data] ?? []
+//                    // Birthday_UserをData型に変換し、配列に追加
+//                    let encoder = JSONEncoder()
+//                    do {
+//                        let data = try encoder.encode(birthday_user)
+//                        birthday_user.append(data)
+//                    } catch {
+//                        print(error.localizedDescription)
+//                    }
+//
+//                    // UserDefaultsに配列を保存
+//                    UserDefaults.standard.set(birthdayUsers, forKey: birthdayUserKey)
                 }
             }
     }
