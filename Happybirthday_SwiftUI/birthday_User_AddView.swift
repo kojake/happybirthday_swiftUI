@@ -67,15 +67,18 @@ struct birthday_User_AddView: View {
                         TextField("タップして日を入力", text: $day).font(.title2).fontWeight(.black).keyboardType(.numberPad).underlineTextField()
                     }
                 }
-                HStack{
-                    Image(systemName: "hand.thumbsup.fill")
-                    Picker("本人の好きなこと", selection: $what_he_likes_selection) {
-                        ForEach(0 ..< options.count) {
-                            Text(self.options[$0])
+                VStack{
+                    Text("本人の好きなことを選択し下さい").font(.title).fontWeight(.black)
+                    HStack{
+                        Image(systemName: "hand.thumbsup.fill")
+                        Picker("本人の好きなこと", selection: $what_he_likes_selection) {
+                            ForEach(options, id: \.self) { option in
+                                Text(option)
+                            }
                         }
-                    }
-                    .pickerStyle(.menu)
-                }.fontWeight(.black)
+                        .pickerStyle(.wheel)
+                    }.fontWeight(.black)
+                }
                 if let image = image {
                     image
                         .resizable()
@@ -109,19 +112,19 @@ struct birthday_User_AddView: View {
                     Text("誕生日が追加されない時の対処法").fontWeight(.black)
                     Text("画像が挿入されていない").fontWeight(.black)
                 }
-                .toolbar {
-                    ToolbarItem(placement: .keyboard) {
-                        Button("閉じる") {
-                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                        }
-                    }
-                }
                 .alert(isPresented: $ShouldShowerror_alert) {
                     Alert(title: Text("エラー"),
                           message: Text("生年月日のどれかの欄が入力されていません又は、年が1926年から2023の間で入力されていない"),
                           dismissButton: .default(Text("了解"),
                                                   action: {dismiss()})
                     )
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .keyboard) {
+                    Button("閉じる") {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    }
                 }
             }
             .navigationBarTitle("誕生日人を追加する")
@@ -158,7 +161,7 @@ struct birthday_User_AddView: View {
                     userDefaults.set(imageData, forKey: "savedImage")
                 }
                 if !name.isEmpty && !year.isEmpty && !month.isEmpty && !day.isEmpty {
-                    Birthday_User.append(birthday_User(name: name, year: year, month: month, day: day, japanese_calender: japanese_calender, what_he_likes: what_he_likes_selection))
+                    Birthday_User.append(birthday_User(name: name, year: year, month: month, day: day, japanese_calender: japanese_calender, what_he_likes: what_he_likes_selection)
 //                    let birthday_user = birthday_User(name: name, year: year, month: month, day: day, japanese_calender: japanese_calender)
 //                    // UserDefaultsのキー
 //                    let birthdayUserKey = "birthdayUserKey_hoge"
@@ -175,7 +178,7 @@ struct birthday_User_AddView: View {
 //
 //                    // UserDefaultsに配列を保存
 //                    UserDefaults.standard.set(birthdayUsers, forKey: birthdayUserKey)
-                }
+                )}
             }
     }
     func loadImage() {

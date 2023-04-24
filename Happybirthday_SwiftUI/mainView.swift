@@ -24,6 +24,12 @@ struct MainView: View {
     @State private var showPhotoAddView = false
     @State private var showstrashView = false
     
+    @State var backgroundColor_count = 0
+    
+    init(){
+        UITableView.appearance().backgroundColor = UIColor.white
+    }
+    
     var body: some View {
         NavigationView {
             List {
@@ -62,7 +68,7 @@ struct MainView: View {
                     }
                 }.onDelete(perform: { indexSet in
                     Birthday_User.remove(at: indexSet.first!)
-                  })
+                })
             }
             .navigationBarTitle("HappyBirthday")
             .navigationBarItems(trailing: Button(action: {
@@ -73,8 +79,34 @@ struct MainView: View {
             .sheet(isPresented: $showPhotoAddView) {
                 birthday_User_AddView(Birthday_User: $Birthday_User)
             }
+            .navigationBarItems(trailing: Button(action:{
+                if backgroundColor_count == 0{
+                    Image(systemName: "moon.fill")
+                    backgroundColor_count = 1
+                    background_color_change()
+                    print("0")
+                }
+                else{
+                    Image(systemName: "sun.max.fill")
+                    backgroundColor_count = 0
+                    background_color_change()
+                    print("1")
+                }
+            }){
+                Image(systemName: "sun.max.fill").padding().background(Color.orange).foregroundColor(.white).clipShape(Circle()).padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+            })
             //削除ボタン
             .navigationBarItems(trailing: EditButton().padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()))        }
+    }
+    func background_color_change(){
+        if backgroundColor_count == 1{
+            UITableView.appearance().backgroundColor = UIColor.black
+            print("1")
+        }
+        else{
+            UITableView.appearance().backgroundColor = UIColor.white
+            print("0")
+        }
     }
 }
 

@@ -46,12 +46,14 @@ struct detail_View: View {
                     Text("\(birthday_user_information.name)さんの詳細").font(.title).fontWeight(.black)
                     Text("誕生日は\(birthday_user_information.year)年\(birthday_user_information.month)月\(birthday_user_information.day)日です。").font(.title2).fontWeight(.black)
                     Text("和暦は\(birthday_user_information.japanese_calender)です。").font(.title2).fontWeight(.black)
-                    Text("\(birthday_user_information.name)さんが好きなことは\(birthday_user_information.what_he_likes)です")
-                    
+                    Text("\(birthday_user_information.name)さんが好きなことは").font(.title2).fontWeight(.black)
+                    VStack{
+                        Text(birthday_user_information.what_he_likes).font(.title).fontWeight(.black)
+                    }.padding()
                 }
                 .foregroundColor(.yellow)
             }
             Spacer()
-        }
+        }.onAppear{print(birthday_user_information.what_he_likes)}
     }
 }
