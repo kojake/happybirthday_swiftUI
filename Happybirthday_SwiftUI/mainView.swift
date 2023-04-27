@@ -81,6 +81,7 @@ struct MainView: View {
                     }
                     // UserDefaultsに保存する
                     UserDefaults.standard.set(encodedData, forKey: "saved_birthday_users")
+                    
                 })
             }.onAppear{loadData()}
             .background(Color.clear)
