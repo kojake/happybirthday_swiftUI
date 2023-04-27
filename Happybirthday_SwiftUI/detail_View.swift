@@ -18,20 +18,12 @@ struct detail_View: View {
                     .fill(Color.gray)
                     .shadow(radius: 10)
                 VStack {
-                    if image != nil {
-                        Image(uiImage: image!)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 250.0, height: 250.0, alignment: .center)
-                            .border(Color.blue, width: 3.0)
-                            .clipped()
-                    } else {
-                        Image("NoImage").resizable()
-                            .frame(width: 300, height: 300)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                            .shadow(radius: 7)
-                    }
+                    Image(uiImage: birthday_user_information.image)
+                        .resizable()
+                           .aspectRatio(contentMode: .fill)
+                           .frame(width: 250.0, height: 250.0)
+                           .clipShape(Circle())
+                           .shadow(radius: 20)
                     HStack{
                         Spacer()
                         Text("🎊")

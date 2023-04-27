@@ -44,7 +44,10 @@ struct MainView: View {
                             HStack{
                                 Image(uiImage: item.image)
                                     .resizable()
-                                    .frame(width: 50, height: 50)
+                                       .aspectRatio(contentMode: .fill)
+                                       .frame(width: 70.0, height: 70.0)
+                                       .clipShape(Circle())
+                                       .shadow(radius: 20)
                                 Text(item.year).fontWeight(.black).font(.title)
                                 Text("/")
                                 Text(item.month).fontWeight(.black).font(.title)
