@@ -18,7 +18,7 @@ struct detail_View: View {
                     .fill(Color.gray)
                     .shadow(radius: 10)
                 VStack {
-                    Image(uiImage: birthday_user_information.image)
+                    Image(uiImage: birthday_user_information.image!)
                         .resizable()
                            .aspectRatio(contentMode: .fill)
                            .frame(width: 250.0, height: 250.0)

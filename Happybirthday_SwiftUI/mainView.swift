@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct birthday_User: Identifiable {
+struct birthday_User: Codable, Identifiable{
     var id = UUID()
     var name: String
     var year: String
@@ -15,7 +15,22 @@ struct birthday_User: Identifiable {
     var day: String
     var japanese_calender: String
     var what_he_likes: String
-    var image: UIImage
+    var imageData: Data?
+    
+    init(name: String, year: String, month: String, day: String, japanese_calender: String, what_he_likes: String, image: UIImage) {
+        self.name = name
+        self.year = year
+        self.month = month
+        self.day = day
+        self.japanese_calender = japanese_calender
+        self.what_he_likes = what_he_likes
+        self.imageData = image.data
+    }
+    
+    var image: UIImage? {
+        guard let imageData = imageData else { return nil }
+        return UIImage(data: imageData)
+    }
 }
 
 struct MainView: View {
@@ -42,7 +57,7 @@ struct MainView: View {
                                 Text(item.japanese_calender).fontWeight(.black).font(.largeTitle)
                             }
                             HStack{
-                                Image(uiImage: item.image)
+                                Image(uiImage: item.image!)
                                     .resizable()
                                        .aspectRatio(contentMode: .fill)
                                        .frame(width: 70.0, height: 70.0)
@@ -60,8 +75,14 @@ struct MainView: View {
                     }
                 }.onDelete(perform: { indexSet in
                     Birthday_User.remove(at: indexSet.first!)
+                    let encoder = JSONEncoder()
+                    guard let encodedData = try? encoder.encode(Birthday_User) else {
+                        return
+                    }
+                    // UserDefaultsに保存する
+                    UserDefaults.standard.set(encodedData, forKey: "saved_birthday_users")
                 })
-            }
+            }.onAppear{loadData()}
             .background(Color.clear)
             .navigationBarTitle("HappyBirthday")
             .navigationBarItems(trailing: Button(action: {
@@ -75,10 +96,23 @@ struct MainView: View {
             //削除ボタン
             .navigationBarItems(trailing: EditButton().padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()))        }
     }
+    func loadData() {
+        if let data = UserDefaults.standard.data(forKey: "saved_birthday_users") {
+            let decoder = JSONDecoder()
+            if let decodedData = try? decoder.decode([birthday_User].self, from: data) {
+                Birthday_User = decodedData
+            }
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
+    }
+}
+extension UIImage {
+    var data: Data? {
+        return self.jpegData(compressionQuality: 1.0)
     }
 }

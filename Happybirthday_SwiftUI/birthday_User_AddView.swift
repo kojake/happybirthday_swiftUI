@@ -127,6 +127,7 @@ struct birthday_User_AddView: View {
                     }
                 }
             }
+            
             .navigationBarTitle("誕生日人を追加する")
             .navigationBarItems(leading: Button("✖️"){
                 presentationMode.wrappedValue.dismiss()
@@ -153,12 +154,19 @@ struct birthday_User_AddView: View {
                     }
                 }
                 if let image = image, !name.isEmpty {
-                    Birthday_User.append(birthday_User(name: name, year: year, month: month, day: day, japanese_calender: japanese_calender, what_he_likes: what_he_likes_selection, image: image)
-                    )}
+                    Birthday_User.append(birthday_User(name: name, year: year, month: month, day: day, japanese_calender: japanese_calender, what_he_likes: what_he_likes_selection, image: image))
+
+                    let encoder = JSONEncoder()
+                    guard let encodedData = try? encoder.encode(Birthday_User) else {
+                        return
+                    }
+                    // UserDefaultsに保存する
+                    UserDefaults.standard.set(encodedData, forKey: "saved_birthday_users")
+                    }
             }
                 .sheet(isPresented: $showingImagePicker, content: {
                     PhotoModal(image: $image)
                 })
-                                )}
-            }
-            }
+            )}
+    }
+}
