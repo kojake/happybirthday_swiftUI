@@ -37,7 +37,7 @@ struct MainView: View {
     @State var Birthday_User: [birthday_User] = []
     //画面遷移用
     @State private var showPhotoAddView = false
-    @State private var showstrashView = false
+    @State private var showShould_help_View = false
     
     init(){
         UITableView.appearance().backgroundColor = UIColor.white
@@ -81,7 +81,6 @@ struct MainView: View {
                     }
                     // UserDefaultsに保存する
                     UserDefaults.standard.set(encodedData, forKey: "saved_birthday_users")
-                    
                 })
             }.onAppear{loadData()}
             .background(Color.clear)
@@ -91,8 +90,17 @@ struct MainView: View {
             }) {
                 Image(systemName: "plus").padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()).padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
             })
+            .navigationBarItems(trailing: Button(action: {
+                showShould_help_View.toggle()
+            }) {
+                Image(systemName: "questionmark.circle.fill").padding().background(Color.pink).foregroundColor(.white).clipShape(Circle()).padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+            })
+            
             .sheet(isPresented: $showPhotoAddView) {
                 birthday_User_AddView(Birthday_User: $Birthday_User)
+            }
+            .sheet(isPresented: $showShould_help_View) {
+                help_View()
             }
             //削除ボタン
             .navigationBarItems(trailing: EditButton().padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()))        }
@@ -117,3 +125,4 @@ extension UIImage {
         return self.jpegData(compressionQuality: 1.0)
     }
 }
+

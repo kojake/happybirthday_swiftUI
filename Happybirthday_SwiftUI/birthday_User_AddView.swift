@@ -60,11 +60,43 @@ struct birthday_User_AddView: View {
                     VStack(alignment: .leading) {
                         HStack {
                             Image(systemName: "person.fill")
-                            TextField("タップして名前を入力", text: $name)
-                        }//.underlineTextField()
-                        TextField("タップして年を入力", text: $year).font(.title2).fontWeight(.black).keyboardType(.numberPad)//.underlineTextField()
-                        TextField("タップして月を入力", text: $month).font(.title2).fontWeight(.black).keyboardType(.numberPad)//.underlineTextField()
-                        TextField("タップして日を入力", text: $day).font(.title2).fontWeight(.black).keyboardType(.numberPad)//.underlineTextField()
+                            TextField("タップして名前を入力", text: $name).frame(width: UIScreen.main.bounds.size.width - 80, height: 41, alignment: .center)
+                                .textFieldStyle(.plain)
+                                .background(Color.init(red: 211.0/255.0, green: 211.0/255.0, blue: 211.0/255.0))
+                                .textContentType(.emailAddress)
+                                .cornerRadius(10)
+                                .multilineTextAlignment(.center)
+                                .padding(.top, 15)
+                                .padding(.bottom, 10)
+                                .foregroundColor(.blue)
+                        }
+                        TextField("タップして年を入力", text: $year).font(.title2).fontWeight(.black).keyboardType(.numberPad).frame(width: UIScreen.main.bounds.size.width - 80, height: 41, alignment: .center)
+                            .textFieldStyle(.plain)
+                            .background(Color.init(red: 211.0/255.0, green: 211.0/255.0, blue: 211.0/255.0))
+                            .textContentType(.emailAddress)
+                            .cornerRadius(10)
+                            .multilineTextAlignment(.center)
+                            .padding(.top, 15)
+                            .padding(.bottom, 10)
+                            .foregroundColor(.blue)
+                        TextField("タップして月を入力", text: $month).font(.title2).fontWeight(.black).keyboardType(.numberPad).frame(width: UIScreen.main.bounds.size.width - 80, height: 41, alignment: .center)
+                            .textFieldStyle(.plain)
+                            .background(Color.init(red: 211.0/255.0, green: 211.0/255.0, blue: 211.0/255.0))
+                            .textContentType(.emailAddress)
+                            .cornerRadius(10)
+                            .multilineTextAlignment(.center)
+                            .padding(.top, 15)
+                            .padding(.bottom, 10)
+                            .foregroundColor(.blue)
+                        TextField("タップして日を入力", text: $day).font(.title2).fontWeight(.black).keyboardType(.numberPad).frame(width: UIScreen.main.bounds.size.width - 80, height: 41, alignment: .center)
+                            .textFieldStyle(.plain)
+                            .background(Color.init(red: 211.0/255.0, green: 211.0/255.0, blue: 211.0/255.0))
+                            .textContentType(.emailAddress)
+                            .cornerRadius(10)
+                            .multilineTextAlignment(.center)
+                            .padding(.top, 15)
+                            .padding(.bottom, 10)
+                            .foregroundColor(.blue)
                     }
                 }
                 VStack{
@@ -93,7 +125,7 @@ struct birthday_User_AddView: View {
                             Image("photo")
                             Text("写真を選択する")
                         }
-                    }//.buttonStyle(BlueButtonStyle())
+                    }.buttonStyle(BlueButtonStyle())
                     Spacer()
                 }
                 HStack{
@@ -168,5 +200,20 @@ struct birthday_User_AddView: View {
                     PhotoModal(image: $image)
                 })
             )}
+    }
+}
+
+struct BlueButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.system(size: 28, weight:.bold, design: .rounded))
+            .foregroundColor(.white)
+            .padding(.horizontal)
+            .padding(5)
+            .background(Color.blue.opacity(0.8))
+            .cornerRadius(20)
+            .shadow(color:.black, radius: 4)
+            .opacity(configuration.isPressed ? 0.6 : 1.0)
+            .scaleEffect(configuration.isPressed ? 0.8 : 1.0)
     }
 }
