@@ -11,7 +11,7 @@ import SwiftUI
 struct Happybirthday_SwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            welcomView()
         }
     }
 }
