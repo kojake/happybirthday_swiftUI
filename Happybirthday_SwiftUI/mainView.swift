@@ -97,11 +97,11 @@ struct MainView: View {
             }) {
                 Image(systemName: "plus").padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()).padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
             })
-            
+            .navigationBarItems(leading: Text("削除するならeditボタン→").fontWeight(.black))
+            .navigationBarItems(trailing: EditButton().padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()))}
             .sheet(isPresented: $showPhotoAddView) {
                 birthday_User_AddView(Birthday_User: $Birthday_User)
             }            //削除ボタン
-            .navigationBarItems(trailing: EditButton().padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()))        }
     }
     func loadData() {
         if let data = UserDefaults.standard.data(forKey: "saved_birthday_users") {
