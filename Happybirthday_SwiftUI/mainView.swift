@@ -35,12 +35,21 @@ struct birthday_User: Codable, Identifiable{
 
 struct MainView: View {
     @State var Birthday_User: [birthday_User] = []
+    
     //画面遷移用
     @State private var showPhotoAddView = false
     @State private var showShould_help_View = false
     
     init(){
+        //Userdefaultsから情報を読み込む
         UITableView.appearance().backgroundColor = UIColor.white
+        
+        if let data = UserDefaults.standard.data(forKey: "saved_birthday_users"),
+           let savedBirthdayUsers = try? JSONDecoder().decode([birthday_User].self, from: data) {
+            self._Birthday_User = State(initialValue: savedBirthdayUsers)
+        } else {
+            self._Birthday_User = State(initialValue: [])
+        }
     }
     
     var body: some View {
@@ -79,7 +88,6 @@ struct MainView: View {
                     guard let encodedData = try? encoder.encode(Birthday_User) else {
                         return
                     }
-                    // UserDefaultsに保存する
                     UserDefaults.standard.set(encodedData, forKey: "saved_birthday_users")
                 })
             }.onAppear{loadData()}

@@ -16,11 +16,22 @@ struct help_View: View {
         NavigationView {
             VStack{
                 Text("HELP").font(.largeTitle).fontWeight(.black)
-                Text("____________________").fontWeight(.black).font(.largeTitle)
+                Text("_________________").fontWeight(.black).font(.largeTitle)
+                Spacer()
                 HStack{
-                    Image("questionmark.circle.fill")
+                    Image(systemName:"q.circle.fill").font(.largeTitle).foregroundColor(.blue)
                     Text("誕生日を覚えている人を削除したのに削除されていない").font(.title2).fontWeight(.black)
-                }.padding()
+                }
+                VStack{
+                    ForEach(0..<3){index in
+                        Text(" ")
+                    }
+                }
+                HStack{
+                    Image(systemName: "a.circle.fill").font(.largeTitle).foregroundColor(.red)
+                    Text("同じ情報の人を二回追加していませんか？もし同じ情報の人が二人いましたら二人とも追加しないといけません").font(.title3).fontWeight(.black)
+                }
+                Spacer()
             }
         }.navigationBarItems(leading: Button("✖️"){
             presentationMode.wrappedValue.dismiss()
