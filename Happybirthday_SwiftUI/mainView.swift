@@ -38,7 +38,6 @@ struct MainView: View {
     
     //画面遷移用
     @State private var showPhotoAddView = false
-    @State private var showShould_help_View = false
     
     init(){
         //Userdefaultsから情報を読み込む
@@ -83,7 +82,7 @@ struct MainView: View {
                         }
                     }
                 }.onDelete(perform: { indexSet in
-                    Birthday_User.remove(at: indexSet.first!)
+                    Birthday_User.remove(atOffsets: indexSet)
                     let encoder = JSONEncoder()
                     guard let encodedData = try? encoder.encode(Birthday_User) else {
                         return
@@ -98,19 +97,10 @@ struct MainView: View {
             }) {
                 Image(systemName: "plus").padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()).padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
             })
-            .navigationBarItems(trailing: Button(action: {
-                showShould_help_View.toggle()
-            }) {
-                Image(systemName: "questionmark.circle.fill").padding().background(Color.pink).foregroundColor(.white).clipShape(Circle()).padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-            })
             
             .sheet(isPresented: $showPhotoAddView) {
                 birthday_User_AddView(Birthday_User: $Birthday_User)
-            }
-            .sheet(isPresented: $showShould_help_View) {
-                help_View()
-            }
-            //削除ボタン
+            }            //削除ボタン
             .navigationBarItems(trailing: EditButton().padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()))        }
     }
     func loadData() {

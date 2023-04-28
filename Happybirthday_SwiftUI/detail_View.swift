@@ -50,8 +50,6 @@ struct detail_View: View {
                 }
                 Spacer()
             }
-        }.navigationBarItems(leading: Button("✖️"){
-            presentationMode.wrappedValue.dismiss()
-        })
+        }
     }
 }

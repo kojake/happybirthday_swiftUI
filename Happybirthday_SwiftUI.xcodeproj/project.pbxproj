@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		971AC0E329F4B7E600CFF754 /* detail_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971AC0E229F4B7E600CFF754 /* detail_View.swift */; };
 		9764B0BC29CD1D420083E75B /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9764B0BB29CD1D420083E75B /* PhotoModel.swift */; };
-		976E326B29FA61A6001C08CB /* help_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976E326A29FA61A6001C08CB /* help_View.swift */; };
 		977AB36429C4768B006521B4 /* Happybirthday_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977AB36329C4768B006521B4 /* Happybirthday_SwiftUIApp.swift */; };
 		977AB36629C4768B006521B4 /* mainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977AB36529C4768B006521B4 /* mainView.swift */; };
 		977AB36829C4768C006521B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 977AB36729C4768C006521B4 /* Assets.xcassets */; };
@@ -20,7 +19,6 @@
 /* Begin PBXFileReference section */
 		971AC0E229F4B7E600CFF754 /* detail_View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = detail_View.swift; sourceTree = "<group>"; };
 		9764B0BB29CD1D420083E75B /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
-		976E326A29FA61A6001C08CB /* help_View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = help_View.swift; sourceTree = "<group>"; };
 		977AB36029C4768B006521B4 /* Happybirthday_SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Happybirthday_SwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		977AB36329C4768B006521B4 /* Happybirthday_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Happybirthday_SwiftUIApp.swift; sourceTree = "<group>"; };
 		977AB36529C4768B006521B4 /* mainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainView.swift; sourceTree = "<group>"; };
@@ -62,7 +60,6 @@
 				977AB36329C4768B006521B4 /* Happybirthday_SwiftUIApp.swift */,
 				9764B0BB29CD1D420083E75B /* PhotoModel.swift */,
 				977AB36529C4768B006521B4 /* mainView.swift */,
-				976E326A29FA61A6001C08CB /* help_View.swift */,
 				97A236C629CE83270056FB61 /* birthday_User_AddView.swift */,
 				971AC0E229F4B7E600CFF754 /* detail_View.swift */,
 				977AB36729C4768C006521B4 /* Assets.xcassets */,
@@ -154,7 +151,6 @@
 				977AB36429C4768B006521B4 /* Happybirthday_SwiftUIApp.swift in Sources */,
 				97A236C729CE83270056FB61 /* birthday_User_AddView.swift in Sources */,
 				971AC0E329F4B7E600CFF754 /* detail_View.swift in Sources */,
-				976E326B29FA61A6001C08CB /* help_View.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
