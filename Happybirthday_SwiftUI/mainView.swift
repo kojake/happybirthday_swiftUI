@@ -5,6 +5,7 @@
 //  Created by kaito on 2023/03/17.
 //
 import SwiftUI
+
 struct birthday_User: Codable, Identifiable{
     var id = UUID()
     var name: String
@@ -30,6 +31,8 @@ struct birthday_User: Codable, Identifiable{
         return UIImage(data: imageData)
     }
 }
+
+
 struct MainView: View {
     @State var Birthday_User: [birthday_User] = []
     
@@ -87,8 +90,8 @@ struct MainView: View {
                                     Spacer()
                                     
                                 }
-                            }
-                        }.listRowBackground(list_color)
+                            }.listRowBackground(Color.random)
+                        }
                     }.onDelete(perform: { indexSet in
                         Birthday_User.remove(at: indexSet.first!)
                         Birthday_User.remove(atOffsets: indexSet)
@@ -104,10 +107,25 @@ struct MainView: View {
                     .navigationBarItems(trailing: Button(action: {
                         showPhotoAddView.toggle()
                     }) {
-                        Image(systemName: "plus").padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()).padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+                        Image(systemName: "plus")
+                            .bold()
+                            .padding()
+                            .frame(width: 50, height: 40)
+                            .foregroundColor(Color.black)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.purple, lineWidth: 3)
+                            )
                     })
                     .navigationBarItems(leading: Text("削除するならeditボタン→").fontWeight(.black))
-                    .navigationBarItems(trailing: EditButton().padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()))        }
+                    .navigationBarItems(trailing: EditButton()                       .bold()
+                        .padding()
+                        .frame(width: 50, height: 40)
+                        .foregroundColor(Color.black)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.purple, lineWidth: 3)
+                        ))        }
                 .sheet(isPresented: $showPhotoAddView) {
                     birthday_User_AddView(Birthday_User: $Birthday_User)
                 }
@@ -130,5 +148,15 @@ struct ContentView_Previews: PreviewProvider {
 extension UIImage {
     var data: Data? {
         return self.jpegData(compressionQuality: 1.0)
+    }
+}
+
+extension Color {
+    static var random: Color {
+        return Color(
+            red: .random(in: 0...1),
+            green: .random(in: 0...1),
+            blue: .random(in: 0...1)
+        )
     }
 }

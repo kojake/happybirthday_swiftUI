@@ -23,6 +23,7 @@ struct birthday_User_AddView: View {
     @State var month = ""
     @State var day = ""
     @State var japanese_calender = ""
+    @State private var list_bgColor = Color.white
     
     //本人の好きなこと
     let options = ["スポーツや運動をすること","音楽を聴くことや演奏すること"
@@ -99,6 +100,7 @@ struct birthday_User_AddView: View {
                             .foregroundColor(.blue)
                     }
                 }
+                
                 VStack{
                     Text("本人の好きなことを選択し下さい").font(.title).fontWeight(.black)
                     HStack{
@@ -111,6 +113,7 @@ struct birthday_User_AddView: View {
                         .pickerStyle(.wheel)
                     }.fontWeight(.black)
                 }
+                
                 if let image = image {
                     Image(uiImage: image)
                         .resizable()
@@ -132,17 +135,6 @@ struct birthday_User_AddView: View {
                     Text("生年月日と画像を挿入できたら").fontWeight(.black)
                     Text("追加").foregroundColor(.blue)
                     Text("をタップして下さい").fontWeight(.black)
-                }
-                VStack{
-                    HStack{
-                        Text("何もアラートが出ないなら").fontWeight(.black)
-                        Text("追加完了!").fontWeight(.black)
-                    }
-                    Text("✖️を押して前の画面に戻れる").fontWeight(.black)
-                }
-                VStack{
-                    Text("誕生日が追加されない時の対処法").fontWeight(.black)
-                    Text("画像が挿入されていない").fontWeight(.black)
                 }
                 .alert(isPresented: $ShouldShowerror_alert) {
                     Alert(title: Text("エラー"),
@@ -195,6 +187,9 @@ struct birthday_User_AddView: View {
                     // UserDefaultsに保存する
                     UserDefaults.standard.set(encodedData, forKey: "saved_birthday_users")
                     }
+                
+                    //画面を閉じる
+                    dismiss()
             }
                 .sheet(isPresented: $showingImagePicker, content: {
                     PhotoModal(image: $image)
