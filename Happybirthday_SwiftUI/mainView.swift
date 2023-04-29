@@ -43,8 +43,6 @@ struct MainView: View {
     let deviceWidth = UIScreen.main.bounds.width
     let deviceHeight = UIScreen.main.bounds.height
     
-    let list_color = Color.blue
-    
     init(){
         //Userdefaultsから情報を読み込む
         UITableView.appearance().backgroundColor = .clear
@@ -101,7 +99,9 @@ struct MainView: View {
                         }
                         UserDefaults.standard.set(encodedData, forKey: "saved_birthday_users")
                     })
-                }.onAppear{loadData()}
+                }.onAppear{
+                    loadData()
+                }
                     .background(Color.clear)
                     .navigationBarTitle("/🎂🎁誕生日リスト🎁🎂/")
                     .navigationBarItems(trailing: Button(action: {

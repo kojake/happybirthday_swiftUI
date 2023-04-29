@@ -7,11 +7,16 @@
 
 import SwiftUI
 
+
 struct detail_View: View {
     @State var birthday_user_information: birthday_User
     @Environment(\.dismiss) var dismiss
     @Environment(\.presentationMode) var presentationMode
     @State var image = UserDefaults.standard.object(forKey: "savedImage") as? UIImage
+    
+    //今日の日にちを取得
+    let currentDate = Date()
+    let calendar = Calendar.current
     
     var body: some View {
         NavigationView{
@@ -45,11 +50,39 @@ struct detail_View: View {
                         VStack{
                             Text(birthday_user_information.what_he_likes).font(.title).fontWeight(.black)
                         }.padding()
+                        VStack{
+                            Text(daysUntilTargetMessage()).font(.largeTitle).fontWeight(.black)
+                        }
                     }
                     .foregroundColor(.yellow)
                 }
                 Spacer()
             }
         }
+    }
+    func daysUntilTargetMessage() -> String {
+        let todayMonth = calendar.component(.month, from: currentDate)
+        let todayDay = calendar.component(.day, from: currentDate)
+        let targetMonth = Int(birthday_user_information.month)
+        let targetDay = Int(birthday_user_information.day)
+        var daysUntilTarget = 0
+        
+        if todayMonth <= targetMonth! {
+            // 同じ年内で目標月が今月より後の場合
+            if let date1 = calendar.date(from: DateComponents(year: calendar.component(.year, from: currentDate), month: todayMonth, day: todayDay)),
+               let date2 = calendar.date(from: DateComponents(year: calendar.component(.year, from: currentDate), month: targetMonth, day: targetDay)) {
+                let components = calendar.dateComponents([.day], from: date1, to: date2)
+                daysUntilTarget = components.day ?? 0
+            }
+        } else {
+            // 同じ年内で目標月が今月より前の場合
+            if let date1 = calendar.date(from: DateComponents(year: calendar.component(.year, from: currentDate), month: todayMonth, day: todayDay)),
+               let date2 = calendar.date(from: DateComponents(year: calendar.component(.year, from: currentDate) + 1, month: targetMonth, day: targetDay)) {
+                let components = calendar.dateComponents([.day], from: date1, to: date2)
+                daysUntilTarget = components.day ?? 0
+            }
+        }
+        
+        return "誕生日まで後\(daysUntilTarget) 日です。"
     }
 }
