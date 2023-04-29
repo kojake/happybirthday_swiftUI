@@ -4,9 +4,7 @@
 //
 //  Created by kaito on 2023/03/17.
 //
-
 import SwiftUI
-
 struct birthday_User: Codable, Identifiable{
     var id = UUID()
     var name: String
@@ -32,16 +30,21 @@ struct birthday_User: Codable, Identifiable{
         return UIImage(data: imageData)
     }
 }
-
 struct MainView: View {
     @State var Birthday_User: [birthday_User] = []
     
     //画面遷移用
     @State private var showPhotoAddView = false
+    @State private var showShould_help_View = false
+    
+    let deviceWidth = UIScreen.main.bounds.width
+    let deviceHeight = UIScreen.main.bounds.height
+    
+    let list_color = Color.blue
     
     init(){
         //Userdefaultsから情報を読み込む
-        UITableView.appearance().backgroundColor = UIColor.white
+        UITableView.appearance().backgroundColor = .clear
         
         if let data = UserDefaults.standard.data(forKey: "saved_birthday_users"),
            let savedBirthdayUsers = try? JSONDecoder().decode([birthday_User].self, from: data) {
@@ -54,8 +57,10 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             ZStack{
-                Color.white // 背景になるビューを指定する
-                LinearGradient(gradient: Gradient(colors: [.purple, .blue]), startPoint: .top, endPoint: .bottom)
+                Image("icon").resizable().aspectRatio(contentMode: .fill)
+                    .frame(width: deviceWidth/10, height: deviceHeight/2.2)
+                    .position(x: deviceWidth/2, y: deviceHeight/2.5)
+                    .opacity(0.2)
                 List {
                     ForEach(Birthday_User) { item in
                         NavigationLink(destination: detail_View(birthday_user_information: item)){
@@ -83,8 +88,9 @@ struct MainView: View {
                                     
                                 }
                             }
-                        }
+                        }.listRowBackground(list_color)
                     }.onDelete(perform: { indexSet in
+                        Birthday_User.remove(at: indexSet.first!)
                         Birthday_User.remove(atOffsets: indexSet)
                         let encoder = JSONEncoder()
                         guard let encodedData = try? encoder.encode(Birthday_User) else {
@@ -92,21 +98,20 @@ struct MainView: View {
                         }
                         UserDefaults.standard.set(encodedData, forKey: "saved_birthday_users")
                     })
+                }.onAppear{loadData()}
+                    .background(Color.clear)
+                    .navigationBarTitle("/🎂🎁誕生日リスト🎁🎂/")
+                    .navigationBarItems(trailing: Button(action: {
+                        showPhotoAddView.toggle()
+                    }) {
+                        Image(systemName: "plus").padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()).padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+                    })
+                    .navigationBarItems(leading: Text("削除するならeditボタン→").fontWeight(.black))
+                    .navigationBarItems(trailing: EditButton().padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()))        }
+                .sheet(isPresented: $showPhotoAddView) {
+                    birthday_User_AddView(Birthday_User: $Birthday_User)
                 }
-            }.frame(height: 1100).onAppear{loadData()}
-            .background(Color.clear)
-            .navigationBarTitle("/🎁🎂誕生日リスト🎂🎁/")
-            .navigationBarItems(trailing: Button(action: {
-                showPhotoAddView.toggle()
-            }) {
-                Image(systemName: "plus").padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()).padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-            })
-            .navigationBarItems(leading: Text("削除するならeditボタン→").fontWeight(.black))
-            .navigationBarItems(trailing: EditButton().padding().background(Color.brown).foregroundColor(.white).clipShape(Circle()))}
-            .navigationBarBackButtonHidden(true)
-            .sheet(isPresented: $showPhotoAddView) {
-                birthday_User_AddView(Birthday_User: $Birthday_User)
-            }
+        }.navigationBarBackButtonHidden(true)
     }
     func loadData() {
         if let data = UserDefaults.standard.data(forKey: "saved_birthday_users") {
@@ -117,7 +122,6 @@ struct MainView: View {
         }
     }
 }
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
@@ -128,4 +132,3 @@ extension UIImage {
         return self.jpegData(compressionQuality: 1.0)
     }
 }
-
