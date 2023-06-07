@@ -17,10 +17,29 @@ struct detail_View: View {
     //今日の日にちを取得
     let currentDate = Date()
     let calendar = Calendar.current
+    //共有
+    @State private var shareText = "共有するテキスト"
+    @State private var shareImage: UIImage? = nil
     
     var body: some View {
         NavigationView{
             VStack{
+                HStack{
+                    Spacer()
+                    Button(action: {
+                        
+                    }) {
+                        Image(systemName: "arrowshape.turn.up.right.fill")
+                            .resizable()
+                            .padding()
+                            .frame(width: 50, height: 50)
+                            .imageScale(.large)
+                            .foregroundColor(Color.white)
+                            .background(Color.green)
+                            .clipShape(Circle())
+                    }
+                }
+                Spacer()
                 ZStack {
                     RoundedRectangle(cornerRadius: 100)
                         .fill(Color.gray)
@@ -44,8 +63,8 @@ struct detail_View: View {
                             Spacer()
                         }.font(.largeTitle).fontWeight(.black)
                         Text("\(birthday_user_information.name)さんの詳細").font(.title).fontWeight(.black)
-                        Text("誕生日は\(birthday_user_information.year)年\(birthday_user_information.month)月\(birthday_user_information.day)日です。").font(.title2).fontWeight(.black)
-                        Text("和暦は\(birthday_user_information.japanese_calender)です。").font(.title2).fontWeight(.black)
+                        Text("誕生日は\(birthday_user_information.year)年\(birthday_user_information.month)月\(birthday_user_information.day)日").font(.title2).fontWeight(.black)
+                        Text("和暦は\(birthday_user_information.japanese_calender)").font(.title2).fontWeight(.black)
                         Text("\(birthday_user_information.name)さんが好きなことは").font(.title2).fontWeight(.black)
                         VStack{
                             Text(birthday_user_information.what_he_likes).font(.title).fontWeight(.black)
@@ -59,6 +78,17 @@ struct detail_View: View {
                 Spacer()
             }
         }
+    }
+    .onAppear {
+        if let imageName = birthday_user_information.image {
+            shareImage = UIImage(named: imageName)
+        }
+    }
+    
+    func shareContent() {
+        guard let image = shareImage, let imageData = image.pngData() else { return }
+        let avImage = UIActivityViewController(activityItems: [shareText, imageData], applicationActivities: nil)
+        UIApplication.shared.windows.first?.rootViewController?.present(avImage, animated: true, completion: nil)
     }
     func daysUntilTargetMessage() -> String {
         let todayMonth = calendar.component(.month, from: currentDate)
@@ -83,6 +113,6 @@ struct detail_View: View {
             }
         }
         
-        return "誕生日まで後\(daysUntilTarget) 日です。"
+        return "誕生日まで後\(daysUntilTarget) 日"
     }
 }
