@@ -32,10 +32,7 @@ struct detail_View: View {
                             .padding()
                             .frame(width: 50, height: 50)
                             .imageScale(.large)
-                            .foregroundColor(Color.white)
-                            .background(Color.green)
-                            .clipShape(Circle())
-                    }
+                    }.buttonStyle(PressableButtonStyle())
                 }
                 Spacer()
                 ZStack {
@@ -113,3 +110,14 @@ struct detail_View: View {
         return "誕生日まで後\(daysUntilTarget) 日"
     }
 }
+
+struct PressableButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding()
+            .background(configuration.isPressed ? Color.gray.opacity(0.7) : Color.gray)
+            .foregroundColor(.white)
+            .cornerRadius(10)
+    }
+}
+

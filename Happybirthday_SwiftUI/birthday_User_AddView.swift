@@ -49,6 +49,7 @@ struct birthday_User_AddView: View {
     
     //error_alert
     @State private var ShouldShowerror_alert = false
+    @State var error_message = ""
     
     //文字数制限
     private let maxPasswordLength = 4
@@ -138,7 +139,7 @@ struct birthday_User_AddView: View {
                 }
                 .alert(isPresented: $ShouldShowerror_alert) {
                     Alert(title: Text("エラー"),
-                          message: Text("生年月日のどれかの欄が入力されていません又は、年が1926年から2023の間で入力されていない"),
+                          message: Text("\(error_message)"),
                           dismissButton: .default(Text("了解"),
                                                   action: {dismiss()})
                     )
@@ -159,10 +160,35 @@ struct birthday_User_AddView: View {
             .navigationBarItems(trailing: Button("追加") {
                 //西暦を保存する
                 //生年月日が入力されているかを判断する
-                if (name == "") || (year == "") || (month == "") || (day == ""){
-                    //生年月日が入力されていないなら、erroralertを表示する
+                if (name == ""){
+                    error_message = "名前が入力されていません"
                     ShouldShowerror_alert = true
                 }
+                else if (year == ""){
+                    error_message = "年が入力されていません"
+                    ShouldShowerror_alert = true
+                }
+                else if (month == ""){
+                    error_message = "月が入力されていません"
+                    ShouldShowerror_alert = true
+                }
+                else if (day == ""){
+                    error_message = "日が入力されていません"
+                    ShouldShowerror_alert = true
+                }
+                else if Int(month)! >= 13 || Int(month)! <= 0{
+                    error_message = "月が13より以上または0以下が入力されています。"
+                    ShouldShowerror_alert = true
+                }
+                else if Int(day)! >= 31 || Int(day)! <= 0{
+                    error_message = "日が13より以上または0以下が入力されています。"
+                    ShouldShowerror_alert = true
+                }
+                else if image == nil{
+                    error_message = "画像が挿入されていません"
+                    ShouldShowerror_alert = true
+                }
+                
                 else{
                     if (Int(year)! >= 1926) && (Int(year)! <= 1989){
                         japanese_calender = "昭和"
@@ -174,9 +200,11 @@ struct birthday_User_AddView: View {
                         japanese_calender = "令和"
                     }
                     else{
+                        error_message = "年代が1926より下または2023より大きい数字になっています。修正して下さい"
                         ShouldShowerror_alert = true
                     }
                 }
+                
                 if let image = image, !name.isEmpty {
                     Birthday_User.append(birthday_User(name: name, year: year, month: month, day: day, japanese_calender: japanese_calender, what_he_likes: what_he_likes_selection, image: image))
 
@@ -187,9 +215,7 @@ struct birthday_User_AddView: View {
                     // UserDefaultsに保存する
                     UserDefaults.standard.set(encodedData, forKey: "saved_birthday_users")
                     }
-                
-                    //画面を閉じる
-                    dismiss()
+                dismiss()
             }
                 .sheet(isPresented: $showingImagePicker, content: {
                     PhotoModal(image: $image)
