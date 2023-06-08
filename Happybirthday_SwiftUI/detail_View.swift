@@ -7,29 +7,27 @@
 
 import SwiftUI
 
-
 struct detail_View: View {
     @State var birthday_user_information: birthday_User
     @Environment(\.dismiss) var dismiss
     @Environment(\.presentationMode) var presentationMode
     @State var image = UserDefaults.standard.object(forKey: "savedImage") as? UIImage
-    
     //今日の日にちを取得
     let currentDate = Date()
     let calendar = Calendar.current
     //共有
-    @State private var shareText = "共有するテキスト"
+    @State private var shareText = ""
     @State private var shareImage: UIImage? = nil
     
     var body: some View {
-        NavigationView{
-            VStack{
-                HStack{
+        NavigationView {
+            VStack {
+                HStack {
                     Spacer()
                     Button(action: {
-                        
+                        shareContent()
                     }) {
-                        Image(systemName: "arrowshape.turn.up.right.fill")
+                        Image(systemName: "square.and.arrow.up")
                             .resizable()
                             .padding()
                             .frame(width: 50, height: 50)
@@ -78,10 +76,9 @@ struct detail_View: View {
                 Spacer()
             }
         }
-    }
-    .onAppear {
-        if let imageName = birthday_user_information.image {
-            shareImage = UIImage(named: imageName)
+        .onAppear {
+            shareImage = birthday_user_information.image
+            shareText = "\(birthday_user_information.name)さん\n誕生日は\(birthday_user_information.year)年\(birthday_user_information.month)月\(birthday_user_information.day)日\n和暦は\(birthday_user_information.japanese_calender)\n\(birthday_user_information.name)さんが好きなことは\(birthday_user_information.what_he_likes)\n\(birthday_user_information.name)さんの\(daysUntilTargetMessage())です"
         }
     }
     
