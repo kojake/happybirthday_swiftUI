@@ -62,61 +62,67 @@ struct MainView: View {
                     .frame(width: deviceWidth/10, height: deviceHeight/2.2)
                     .position(x: deviceWidth/2, y: deviceHeight/2.5)
                     .opacity(0.2)
-                List {
-                    ForEach(Birthday_User) { item in
-                        NavigationLink(destination: detail_View(birthday_user_information: item)){
-                            VStack{
-                                HStack{
-                                    Text("名前").fontWeight(.black).font(.title)
-                                    Text(item.name).fontWeight(.black).font(.title2)
-                                    Spacer()
-                                    Text("西暦").fontWeight(.black).font(.title)
-                                    Text(item.japanese_calender).fontWeight(.black).font(.largeTitle)
-                                }
-                                HStack{
-                                    Image(uiImage: item.image!)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 70.0, height: 70.0)
-                                        .clipShape(Circle())
-                                        .shadow(radius: 20)
-                                    Text(item.year).fontWeight(.black).font(.title)
-                                    Text("/")
-                                    Text(item.month).fontWeight(.black).font(.title)
-                                    Text("/")
-                                    Text(item.day).fontWeight(.black).font(.title)
-                                    Spacer()
-                                    
-                                }
-                            }.listRowBackground(Color.random)
+                ZStack{
+                    List {
+                        ForEach(Birthday_User) { item in
+                            NavigationLink(destination: detail_View(birthday_user_information: item)){
+                                VStack{
+                                    HStack{
+                                        Text("名前").fontWeight(.black).font(.title)
+                                        Text(item.name).fontWeight(.black).font(.title2)
+                                        Spacer()
+                                        Text("西暦").fontWeight(.black).font(.title)
+                                        Text(item.japanese_calender).fontWeight(.black).font(.largeTitle)
+                                    }
+                                    HStack{
+                                        Image(uiImage: item.image!)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 70.0, height: 70.0)
+                                            .clipShape(Circle())
+                                            .shadow(radius: 20)
+                                        Text(item.year).fontWeight(.black).font(.title)
+                                        Text("/")
+                                        Text(item.month).fontWeight(.black).font(.title)
+                                        Text("/")
+                                        Text(item.day).fontWeight(.black).font(.title)
+                                        Spacer()
+                                        
+                                    }
+                                }.listRowBackground(Color.random)
+                            }
+                        }.onDelete(perform: { indexSet in
+                            Birthday_User.remove(at: indexSet.first!)
+                            Birthday_User.remove(atOffsets: indexSet)
+                            let encoder = JSONEncoder()
+                            guard let encodedData = try? encoder.encode(Birthday_User) else {
+                                return
+                            }
+                            UserDefaults.standard.set(encodedData, forKey: "saved_birthday_users")
+                        })
+                    }
+                    VStack{
+                        Spacer()
+                        HStack{
+                            Spacer()
+                            Button(action: {
+                                showPhotoAddView.toggle()
+                            }) {
+                                Image(systemName: "plus")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .foregroundColor(Color.white)
+                                    .background(Color.yellow)
+                                    .clipShape(Circle())
+                                    .frame(width: 80, height: 80)
+                            }.shadow(radius: 20)
                         }
-                    }.onDelete(perform: { indexSet in
-                        Birthday_User.remove(at: indexSet.first!)
-                        Birthday_User.remove(atOffsets: indexSet)
-                        let encoder = JSONEncoder()
-                        guard let encodedData = try? encoder.encode(Birthday_User) else {
-                            return
-                        }
-                        UserDefaults.standard.set(encodedData, forKey: "saved_birthday_users")
-                    })
+                    }
                 }.onAppear{
                     loadData()
                 }
                     .background(Color.clear)
                     .navigationBarTitle("/🎂🎁誕生日リスト🎁🎂/")
-                    .navigationBarItems(trailing: Button(action: {
-                        showPhotoAddView.toggle()
-                    }) {
-                        Image(systemName: "plus")
-                            .bold()
-                            .padding()
-                            .frame(width: 50, height: 40)
-                            .foregroundColor(Color.black)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.purple, lineWidth: 3)
-                            )
-                    })
                     .navigationBarItems(leading: Text("削除するならeditボタン→").fontWeight(.black))
                     .navigationBarItems(trailing: EditButton()                       .bold()
                         .padding()
